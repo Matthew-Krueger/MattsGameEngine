@@ -34,5 +34,5 @@
 
 set (MODULE_NAME "${PROJECT_NAME}_Engine")
 
-
-add_library("${MODULE_NAME}" SHARED Displays.c Displays.h)
+add_library("${MODULE_NAME}" SHARED Displays.c Displays.h SharedDeclarations.h include/Matts-Engine/Core.h)
+#target_compile_definitions("${MODULE_NAME}" PRIVATE MGE_BUILD_LIBRARY=1)

@@ -32,10 +32,20 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include <Matts-Engine/Core.h>
+#ifndef MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H
+#define MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H
 
-int main(int argc, char ** argv){
+#if defined (__WIN32__) || (_WIN32) || (__CYGWIN32__) || (_MSC_VER)
+#   if defined MGE_BUILD_LIBRARY
+#       define MGE_API __declspec(dllexport) extern
+#   else
+#       define MGE_API __declspec(dllimport) extern
+#   endif
+#else
+#   define MGE_API extern
+#ifdef MGE_BUILD_LIBRARY
+#error f
+#endif
+#endif
 
-
-
-}
+#endif //MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H
