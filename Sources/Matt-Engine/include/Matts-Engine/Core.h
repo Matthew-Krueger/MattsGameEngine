@@ -32,10 +32,19 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include <Matts-Engine/Core.h>
+#ifndef MATTS_GAME_ENGINE_CORE_H
+#define MATTS_GAME_ENGINE_CORE_H
 
-int main(int argc, char ** argv){
+// C++ incompatibility with name mangling
+#ifdef __cplusplus
+extern "C"{
+#endif
 
+#include "../../SharedDeclarations.h"
+#include "../../Displays.h"
 
+#ifdef __cplusplus
+};
+#endif
 
-}
+#endif //MATTS_GAME_ENGINE_CORE_H

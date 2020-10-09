@@ -32,17 +32,20 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_MATT_ENGINE_H
-#define MATTS_GAME_ENGINE_MATT_ENGINE_H
+#ifndef MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H
+#define MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H
 
-// C++ incompatibility with name mangling
-#ifdef __cplusplus
-extern "C"{
+#if defined (__WIN32__) || (_WIN32) || (__CYGWIN32__) || (_MSC_VER)
+#   if defined MGE_BUILD_LIBRARY
+#       define MGE_API __declspec(dllexport) extern
+#   else
+#       define MGE_API __declspec(dllimport) extern
+#   endif
+#else
+#   define MGE_API extern
+#ifdef MGE_BUILD_LIBRARY
+#error fuck
+#endif
 #endif
 
-#include "../../Displays.h"
-
-#ifdef __cplusplus
-};
-#endif
-#endif //MATTS_GAME_ENGINE_MATT_ENGINE_H
+#endif //MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H
