@@ -32,10 +32,44 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include <Matts-Engine/Core.h>
+#include "SharedDeclarations.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-int main(int argc, char ** argv){
+static const char * decodeLogLevel(MGE_LogLevel level){
+    switch(level){
+        case TRACE:
+            return "Trace";
+        case INFO:
+            return "Info";
+        case FINE:
+            return "Fine";
+        case WARN:
+            return "Warn";
+        case SEVERE:
+            return "Severe";
+        case CRITICAL:
+            return "Critical";
+        default:
+            exit(EXIT_FAILURE);
+    }
+}
 
-    MGE_CORE_LOG_SEVERE("Test","Test reason0");
+void mge_core_log(const char* message, const char* reason, MGE_LogLevel level, const char* file, const char* function,
+                  unsigned int line) {
+
+    const char * levelText = decodeLogLevel(level);
+
+    fprintf(stderr, "MGE Core Error %s ERROR in %s:%u, function %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
 
 }
+
+void mge_app_log(const char* message, const char* reason, MGE_LogLevel level, const char* file, const char* function,
+                 unsigned int line) {
+
+    const char * levelText = decodeLogLevel(level);
+
+    fprintf(stderr, "MGE App Error %s ERROR in %s:%u, function %s\nMessage: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+
+}
+
