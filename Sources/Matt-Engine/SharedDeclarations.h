@@ -118,24 +118,24 @@ MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel
 #       define MGE_APP_LOG_INFO(message, reason)
 #       define MGE_APP_LOG_FINE(message, reason)
 #       define MGE_APP_LOG_WARN(message, reason)
-#       define MGE_APP_LOG_SEVERE(message, reason)   mge_app_log(message, reason, MGE_levelSevere,      __FILE__, __func__, __LINE__);
-#       define MGE_APP_LOG_CRITICAL(message, reason) mge_app_log(message, reason, MGE_levelCritical,    __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_SEVERE(message, reason)    mge_app_log(message, reason, MGE_levelSevere,      __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_CRITICAL(message, reason)  mge_app_log(message, reason, MGE_levelCritical,    __FILE__, __func__, __LINE__);
 #   endif
 #else
     // Debug Core
-#       define MGE_CORE_LOG_TRACE(message, reason)    mge_core_log(message, reason, MGE_levelTrace,     __FILE__, __func__, __LINE__);
-#       define MGE_CORE_LOG_INFO(message, reason)     mge_core_log(message, reason, MGE_levelInfo,      __FILE__, __func__, __LINE__);
-#       define MGE_CORE_LOG_FINE(message, reason)     mge_core_log(message, reason, MGE_levelFine,      __FILE__, __func__, __LINE__);
-#       define MGE_CORE_LOG_WARN(message, reason)     mge_core_log(message, reason, MGE_levelWarn,      __FILE__, __func__, __LINE__);
-#       define MGE_CORE_LOG_SEVERE(message, reason)   mge_core_log(message, reason, MGE_levelSevere,    __FILE__, __func__, __LINE__);
-#       define MGE_CORE_LOG_CRITICAL(message, reason) mge_core_log(message, reason, MGE_levelCritical,  __FILE__, __func__, __LINE__);
+#       define MGE_CORE_LOG_TRACE(message, reason)    mge_core_log(message, reason, MGE_levelTrace,      __FILE__, __func__, __LINE__);
+#       define MGE_CORE_LOG_INFO(message, reason)     mge_core_log(message, reason, MGE_levelInfo,       __FILE__, __func__, __LINE__);
+#       define MGE_CORE_LOG_FINE(message, reason)     mge_core_log(message, reason, MGE_levelFine,       __FILE__, __func__, __LINE__);
+#       define MGE_CORE_LOG_WARN(message, reason)     mge_core_log(message, reason, MGE_levelWarn,       __FILE__, __func__, __LINE__);
+#       define MGE_CORE_LOG_SEVERE(message, reason)   mge_core_log(message, reason, MGE_levelSevere,     __FILE__, __func__, __LINE__);
+#       define MGE_CORE_LOG_CRITICAL(message, reason) mge_core_log(message, reason, MGE_levelCritical,   __FILE__, __func__, __LINE__);
     // Debug App
-#       define MGE_APP_LOG_TRACE(message, reason)    mge_app_log(message, reason, MGE_levelTrace,       __FILE__, __func__, __LINE__);
-#       define MGE_APP_LOG_INFO(message, reason)     mge_app_log(message, reason, MGE_levelInfo,        __FILE__, __func__, __LINE__);
-#       define MGE_APP_LOG_FINE(message, reason)     mge_app_log(message, reason, MGE_levelFine,        __FILE__, __func__, __LINE__);
-#       define MGE_APP_LOG_WARN(message, reason)     mge_app_log(message, reason, MGE_levelWarn,        __FILE__, __func__, __LINE__);
-#       define MGE_APP_LOG_SEVERE(message, reason)   mge_app_log(message, reason, MGE_levelSevere,      __FILE__, __func__, __LINE__);
-#       define MGE_APP_LOG_CRITICAL(message, reason) mge_app_log(message, reason, MGE_levelCritical,    __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_TRACE(message, reason)     mge_app_log(message, reason, MGE_levelTrace,       __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_INFO(message, reason)      mge_app_log(message, reason, MGE_levelInfo,        __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_FINE(message, reason)      mge_app_log(message, reason, MGE_levelFine,        __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_WARN(message, reason)      mge_app_log(message, reason, MGE_levelWarn,        __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_SEVERE(message, reason)    mge_app_log(message, reason, MGE_levelSevere,      __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_CRITICAL(message, reason)  mge_app_log(message, reason, MGE_levelCritical,    __FILE__, __func__, __LINE__);
 #endif
 
 #endif //MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H
