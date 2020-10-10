@@ -75,7 +75,6 @@ typedef enum{
     WARN,
     SEVERE,
     CRITICAL
-
 } MGE_LogLevel;
 
 MGE_API MGE_LogLevel MGE_levelTrace     = TRACE;
@@ -88,6 +87,9 @@ MGE_API MGE_LogLevel MGE_levelCritical  = CRITICAL;
 
 MGE_API void mge_core_log(const char * message, const char * reason, MGE_LogLevel level, const char * file, const char * function, unsigned int line);
 MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel level, const char * file, const char * function, unsigned int line);
+MGE_API void mge_core_inf(const char * message, const char * reason, const char * file, const char * function, unsigned int line);
+MGE_API void mge_app_inf(const char * message, const char * reason, const char * file, const char * function, unsigned int line);
+
 
 #ifdef NDEBUG
 #   ifdef INCLUDE_FINE
@@ -98,6 +100,8 @@ MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel
 #       define MGE_CORE_LOG_WARN(message, reason)     mge_core_log(message, reason, MGE_levelWarning,   __FILE__, __func__, __LINE__);
 #       define MGE_CORE_LOG_SEVERE(message, reason)   mge_core_log(message, reason, MGE_levelSevere,    __FILE__, __func__, __LINE__);
 #       define MGE_CORE_LOG_CRITICAL(message, reason) mge_core_log(message, reason, MGE_levelCritical,  __FILE__, __func__, __LINE__);
+#       define MGE_CORE_INFO(message, reason)         mge_core_inf(message, reason,                     __FILE__, __func__, __LINE__);
+
     // Release FINE App
 #       define MGE_APP_LOG_TRACE(message, reason)     mge_app_log(message, reason, MGE_levelTrace,      __FILE__, __func__, __LINE__);
 #       define MGE_APP_LOG_INFO(message, reason)      mge_app_log(message, reason, MGE_levelInfo,       __FILE__, __func__, __LINE__);
@@ -105,6 +109,7 @@ MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel
 #       define MGE_APP_LOG_WARN(message, reason)      mge_app_log(message, reason, MGE_levelWarn,       __FILE__, __func__, __LINE__);
 #       define MGE_APP_LOG_SEVERE(message, reason)    mge_app_log(message, reason, MGE_levelSevere,     __FILE__, __func__, __LINE__);
 #       define MGE_APP_LOG_CRITICAL(message, reason)  mge_app_log(message, reason, MGE_levelCritical,   __FILE__, __func__, __LINE__);
+#       define MGE_APP_INFO(message, reason)          mge_app_inf(message, reason,                      __FILE__, __func__, __LINE__);
 #   else
     // Release Core
 #       define MGE_CORE_LOG_TRACE(message, reason)
@@ -113,6 +118,7 @@ MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel
 #       define MGE_CORE_LOG_WARN(message, reason)
 #       define MGE_CORE_LOG_SEVERE(message, reason)   mge_core_log(message, reason, MGE_levelSevere,    __FILE__, __func__, __LINE__);
 #       define MGE_CORE_LOG_CRITICAL(message, reason) mge_core_log(message, reason, MGE_levelCritical,  __FILE__, __func__, __LINE__);
+#       define MGE_CORE_INFO(message, reason)         mge_core_inf(message, reason,                     __FILE__, __func__, __LINE__);
     // Release App
 #       define MGE_APP_LOG_TRACE(message, reason)
 #       define MGE_APP_LOG_INFO(message, reason)
@@ -120,6 +126,7 @@ MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel
 #       define MGE_APP_LOG_WARN(message, reason)
 #       define MGE_APP_LOG_SEVERE(message, reason)    mge_app_log(message, reason, MGE_levelSevere,      __FILE__, __func__, __LINE__);
 #       define MGE_APP_LOG_CRITICAL(message, reason)  mge_app_log(message, reason, MGE_levelCritical,    __FILE__, __func__, __LINE__);
+#       define MGE_APP_INFO(message, reason)          mge_app_inf(message, reason,                       __FILE__, __func__, __LINE__);
 #   endif
 #else
     // Debug Core
@@ -129,6 +136,7 @@ MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel
 #       define MGE_CORE_LOG_WARN(message, reason)     mge_core_log(message, reason, MGE_levelWarn,       __FILE__, __func__, __LINE__);
 #       define MGE_CORE_LOG_SEVERE(message, reason)   mge_core_log(message, reason, MGE_levelSevere,     __FILE__, __func__, __LINE__);
 #       define MGE_CORE_LOG_CRITICAL(message, reason) mge_core_log(message, reason, MGE_levelCritical,   __FILE__, __func__, __LINE__);
+#       define MGE_CORE_INFO(message, reason)         mge_core_inf(message, reason,                      __FILE__, __func__, __LINE__);
     // Debug App
 #       define MGE_APP_LOG_TRACE(message, reason)     mge_app_log(message, reason, MGE_levelTrace,       __FILE__, __func__, __LINE__);
 #       define MGE_APP_LOG_INFO(message, reason)      mge_app_log(message, reason, MGE_levelInfo,        __FILE__, __func__, __LINE__);
@@ -136,6 +144,9 @@ MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel
 #       define MGE_APP_LOG_WARN(message, reason)      mge_app_log(message, reason, MGE_levelWarn,        __FILE__, __func__, __LINE__);
 #       define MGE_APP_LOG_SEVERE(message, reason)    mge_app_log(message, reason, MGE_levelSevere,      __FILE__, __func__, __LINE__);
 #       define MGE_APP_LOG_CRITICAL(message, reason)  mge_app_log(message, reason, MGE_levelCritical,    __FILE__, __func__, __LINE__);
+#       define MGE_APP_INFO(message, reason)          mge_app_inf(message, reason,                       __FILE__, __func__, __LINE__);
 #endif
+
+MGE_API void mge_init(const char * mge_engineLogFile, const char * mge_appLogFile);
 
 #endif //MATTS_GAME_ENGINE_SHAREDDECLARATIONS_H

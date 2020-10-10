@@ -41,7 +41,7 @@ extern "C"{
 #endif
 
 #include "../../SharedDeclarations.h"
-#include "../../Displays.h"
+#include "../../Graphics/Displays.h"
 
 #ifdef __cplusplus
 };

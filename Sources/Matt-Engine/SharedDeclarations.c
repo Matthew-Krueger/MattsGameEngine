@@ -73,3 +73,25 @@ void mge_app_log(const char* message, const char* reason, MGE_LogLevel level, co
 
 }
 
+
+
+void mge_core_inf(const char *message, const char *reason, const char *file, const char *function, unsigned int line) {
+
+    fprintf(stdout, "MGE Core Info: Message %s, Reason %s", message, reason);
+    fflush(stdout);
+
+}
+
+void mge_app_inf(const char *message, const char *reason, const char *file, const char *function, unsigned int line) {
+
+    fprintf(stdout, "MGE Application Info: Message %s, Reason %s", message, reason);
+    fflush(stdout);
+
+}
+
+void mge_init(const char *mge_engineLogFile, const char *mge_appLogFile) {
+
+
+
+}
+
