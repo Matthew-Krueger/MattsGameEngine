@@ -36,6 +36,6 @@
 
 int main(int argc, char ** argv){
 
-    MGE_CORE_LOG_SEVERE("Test","Test reason0");
+    MGE_CORE_LOG_INFO("Test","Test reason0");
 
 }

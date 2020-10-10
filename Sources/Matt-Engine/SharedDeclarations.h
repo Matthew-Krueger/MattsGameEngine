@@ -78,12 +78,12 @@ typedef enum{
 
 } MGE_LogLevel;
 
-MGE_LogLevel MGE_levelTrace     = TRACE;
-MGE_LogLevel MGE_levelInfo      = INFO;
-MGE_LogLevel MGE_levelFine      = FINE;
-MGE_LogLevel MGE_levelWarn      = WARN;
-MGE_LogLevel MGE_levelSevere    = SEVERE;
-MGE_LogLevel MGE_levelCritical  = CRITICAL;
+MGE_API MGE_LogLevel MGE_levelTrace     = TRACE;
+MGE_API MGE_LogLevel MGE_levelInfo      = INFO;
+MGE_API MGE_LogLevel MGE_levelFine      = FINE;
+MGE_API MGE_LogLevel MGE_levelWarn      = WARN;
+MGE_API MGE_LogLevel MGE_levelSevere    = SEVERE;
+MGE_API MGE_LogLevel MGE_levelCritical  = CRITICAL;
 
 
 MGE_API void mge_core_log(const char * message, const char * reason, MGE_LogLevel level, const char * file, const char * function, unsigned int line);
