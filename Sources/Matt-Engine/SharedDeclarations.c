@@ -56,20 +56,30 @@ static const char * decodeLogLevel(MGE_LogLevel level){
 }
 
 void mge_core_log(const char* message, const char* reason, MGE_LogLevel level, const char* file, const char* function,
-                  unsigned int line) {
+                  unsigned int line, int exitCode) {
 
     const char * levelText = decodeLogLevel(level);
 
-    fprintf(stderr, "MGE Core Error %s ERROR in %s:%u, function %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+    fprintf(stderr, "MGE Core Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+
+    if(level == CRITICAL){
+        fprintf(stderr, "Error was critical, code: %u. Exiting...", exitCode);
+        exit(exitCode);
+    }
 
 }
 
 void mge_app_log(const char* message, const char* reason, MGE_LogLevel level, const char* file, const char* function,
-                 unsigned int line) {
+                 unsigned int line, int exitCode) {
 
     const char * levelText = decodeLogLevel(level);
 
-    fprintf(stderr, "MGE App Error %s ERROR in %s:%u, function %s\nMessage: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+    fprintf(stderr, "MGE App Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+
+    if(level == CRITICAL){
+        fprintf(stderr, "Error was critical, code: %u. Exiting...", exitCode);
+        exit(exitCode);
+    }
 
 }
 

@@ -8,6 +8,18 @@ This project is built using CMake. The actual engine is a shared library
 which is built as a dependency of all examples. To build just the SO or DLL,
 run cmake and build the target `Matts_Game_Engine_Engine`.
 
+## Using
+##### TODO: Make a WIKI with information on using the engine.
+To use the engine, add this to your `CMakeLists.txt`. The CMakeLists.txt used here is the one in this folder.
+```
+add_subdirectory(path/to/CMakeLists.txt)
+target_link_libraries(YOUR_TARGET_NAME Matts_Game_Engine_Engine)
+```
+For all files that implement the engine, please include the engine core in each file. `#include <Matts-Engine/Core.h>`
+For the file that contains your entry point, please also `#include <Matts-Engine/RequiredGlobals.h>`. This contains the
+required globals that must only be included in one translation unit. This file also includes core,
+so that include may be omitted if you like.
+
 ## License
 Matt's Game Engine is licensed under a `BSD 3-Clause License`. 
 This license is as follows:
@@ -44,3 +56,7 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
+
+## Thanks
+Thanks to [The Cherno](https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw)
+for the game engine series. 

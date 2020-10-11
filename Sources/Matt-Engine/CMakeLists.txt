@@ -32,7 +32,8 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.             #
 #####################################################################################
 
-set (MODULE_NAME "${PROJECT_NAME}_Engine")
+set (MODULE_NAME "Matts_Game_Engine")
 
-add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Graphics/Displays.h SharedDeclarations.h include/Matts-Engine/Core.h SharedDeclarations.c)
+add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Graphics/Displays.h SharedDeclarations.h include/Matts-Engine/Core.h SharedDeclarations.c include/Matts-Engine/RequiredGlobals.h)
 target_compile_definitions("${MODULE_NAME}" PRIVATE MGE_BUILD_LIBRARY)
+target_precompile_headers("${MODULE_NAME}" PUBLIC include/Matts-Engine/Core.h)

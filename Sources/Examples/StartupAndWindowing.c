@@ -36,6 +36,6 @@
 
 int main(int argc, char ** argv){
 
-    MGE_APP_INFO("Test","Test reason")
+
 
 }

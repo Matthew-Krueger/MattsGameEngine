@@ -37,10 +37,19 @@
 cmake_minimum_required(VERSION 3.16.3)
 project(Matts_Game_Engine C)
 
+set(MGE_VERSION_MAJOR "0")
+set(MGE_VERSION_MINOR "0")
+set(MGE_VERSION_PATCH "0")
+set(MGE_VERSION_TWEAK "1")
+set(MGE_VERSION "${MGE_VERSION_MAJOR}.${MGE_VERSION_MINOR}")
+set(MGE_VERSION_FULL "${MGE_VERSION}.${MGE_VERSION_PATCH}-${MGE_VERSION_TWEAK}")
+
 set(CMAKE_C_STANDARD 99)
 
-include_directories(Sources/Matt-Engine/include)
+set(PATH_TO_ENGINE_SRC Sources/Matt-Engine)
+
+include_directories(${PATH_TO_ENGINE_SRC}/include)
 
 
-add_subdirectory(Sources/Matt-Engine)
+add_subdirectory(${PATH_TO_ENGINE_SRC})
 add_subdirectory(Sources/Examples)
