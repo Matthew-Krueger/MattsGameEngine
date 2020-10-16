@@ -87,15 +87,29 @@ void mge_app_log(const char* message, const char* reason, MGE_LogLevel level, co
 
 void mge_core_inf(const char *message, const char *reason, const char *file, const char *function, unsigned int line) {
 
-    fprintf(stdout, "\nMGE Core Info: Message %s, Reason %s\n", message, reason);
+    char * reasonFinal = (char *)calloc(300,sizeof(char));
+    if(reason[0] != '\0'){
+        sprintf(reasonFinal, ", Reason %s", reason);
+    }
+
+    fprintf(stdout, "\nMGE Core Info: Message %s%s\n", message, reasonFinal);
     fflush(stdout);
+
+    free(reasonFinal);
 
 }
 
 void mge_app_inf(const char *message, const char *reason, const char *file, const char *function, unsigned int line) {
 
-    fprintf(stdout, "\nMGE Application Info: Message %s, Reason %s\n", message, reason);
+    char * reasonFinal = (char *)calloc(300,sizeof(char));
+    if(reason[0] != '\0'){
+        sprintf(reasonFinal, ", Reason %s", reason);
+    }
+
+    fprintf(stdout, "\nMGE Application Info: Message %s%s\n", message, reasonFinal);
     fflush(stdout);
+
+    free(reasonFinal);
 
 }
 

@@ -37,7 +37,7 @@
 
 int main(int argc, char ** argv){
 
-    MGE_APP_INFO("Starting up Example Startup and Windowing.", "MGE");
+    MGE_APP_INFO("Starting up Example Startup and Windowing.", "");
 
     MGE_Window* window = MGE_initWindow(1920,1080, "StartupAndWindowing");
 
