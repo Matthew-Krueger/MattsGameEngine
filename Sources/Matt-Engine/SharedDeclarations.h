@@ -94,7 +94,7 @@ MGE_API void mge_app_inf(const char * message, const char * reason, const char *
 #       define MGE_CORE_LOG_WARN(message, reason)               { MGE_LogLevel MGE_levelWarning  = WARNING;   mge_core_log(message, reason, MGE_levelWarning,   __FILE__, __func__, __LINE__, 0); }
 #       define MGE_CORE_LOG_SEVERE(message, reason)             { MGE_LogLevel MGE_levelSevere   = SEVERE;    mge_core_log(message, reason, MGE_levelSevere,    __FILE__, __func__, __LINE__, 0); }
 #       define MGE_CORE_LOG_CRITICAL(message, reason, exitCode) { MGE_LogLevel MGE_levelCritical = CRITICAL;  mge_core_log(message, reason, MGE_levelCritical,  __FILE__, __func__, __LINE__, exitCode); }
-#       define MGE_CORE_INFO(message, reason)         {                                             mge_core_inf(message, reason,                     __FILE__, __func__, __LINE__); }
+#       define MGE_CORE_INFO(message, reason)                   {                                             mge_core_inf(message, reason,                     __FILE__, __func__, __LINE__); }
 
     // Release FINE App
 #       define MGE_APP_LOG_TRACE(message, reason)               { MGE_LogLevel MGE_levelTrace    = TRACE;     mge_app_log(message, reason, MGE_levelTrace,      __FILE__, __func__, __LINE__, 0); }
@@ -103,24 +103,24 @@ MGE_API void mge_app_inf(const char * message, const char * reason, const char *
 #       define MGE_APP_LOG_WARN(message, reason)                { MGE_LogLevel MGE_levelWarning  = WARNING;   mge_app_log(message, reason, MGE_levelWarn,       __FILE__, __func__, __LINE__, 0); }
 #       define MGE_APP_LOG_SEVERE(message, reason)              { MGE_LogLevel MGE_levelSevere   = SEVERE;    mge_app_log(message, reason, MGE_levelSevere,     __FILE__, __func__, __LINE__, 0); }
 #       define MGE_APP_LOG_CRITICAL(message, reason, exitCode)  { MGE_LogLevel MGE_levelCritical = CRITICAL;  mge_app_log(message, reason, MGE_levelCritical,   __FILE__, __func__, __LINE__, exitCode); }
-#       define MGE_APP_INFO(message, reason)          {                                             mge_app_inf(message, reason,                      __FILE__, __func__, __LINE__); }
+#       define MGE_APP_INFO(message, reason)                    {                                             mge_app_inf(message, reason,                      __FILE__, __func__, __LINE__); }
 #   else
     // Release Core
 #       define MGE_CORE_LOG_TRACE(message, reason)
 #       define MGE_CORE_LOG_INFO(message, reason)
 #       define MGE_CORE_LOG_FINE(message, reason)
 #       define MGE_CORE_LOG_WARN(message, reason)
-#       define MGE_CORE_LOG_SEVERE(message, reason)             { MGE_LogLevel MGE_levelSevere   = SEVERE;     __FILE__, __func__, __LINE__, 0);
-#       define MGE_CORE_LOG_CRITICAL(message, reason, exitCode) { MGE_LogLevel MGE_levelCritical = CRITICAL;   __FILE__, __func__, __LINE__, exitCode);
-#       define MGE_CORE_INFO(message, reason)                   {                                              __FILE__, __func__, __LINE__);
+#       define MGE_CORE_LOG_SEVERE(message, reason)             { MGE_LogLevel MGE_levelSevere   = SEVERE;    mge_core_log(message, reason, MGE_levelSevere,     __FILE__, __func__, __LINE__, 0); }
+#       define MGE_CORE_LOG_CRITICAL(message, reason, exitCode) { MGE_LogLevel MGE_levelCritical = CRITICAL;  mge_core_log(message, reason, MGE_levelCritical,   __FILE__, __func__, __LINE__, exitCode); }
+#       define MGE_CORE_INFO(message, reason)                   {                                             mge_core_inf(message, reason,                      __FILE__, __func__, __LINE__); }
     // Release App
 #       define MGE_APP_LOG_TRACE(message, reason)
 #       define MGE_APP_LOG_INFO(message, reason)
 #       define MGE_APP_LOG_FINE(message, reason)
 #       define MGE_APP_LOG_WARN(message, reason)
-#       define MGE_APP_LOG_SEVERE(message, reason)              { MGE_LogLevel MGE_levelSevere   = SEVERE;     __FILE__, __func__, __LINE__, 0);
-#       define MGE_APP_LOG_CRITICAL(message, reason, exitCode)  { MGE_LogLevel MGE_levelCritical = CRITICAL;   __FILE__, __func__, __LINE__, exitCode);
-#       define MGE_APP_INFO(message, reason)                    {                                              __FILE__, __func__, __LINE__);
+#       define MGE_APP_LOG_SEVERE(message, reason)              { MGE_LogLevel MGE_levelSevere   = SEVERE;    mge_core_log(message, reason, MGE_levelSevere,     __FILE__, __func__, __LINE__, 0); }
+#       define MGE_APP_LOG_CRITICAL(message, reason, exitCode)  { MGE_LogLevel MGE_levelCritical = CRITICAL;  mge_core_log(message, reason, MGE_levelCritical,   __FILE__, __func__, __LINE__, exitCode); }
+#       define MGE_APP_INFO(message, reason)                    {                                             mge_core_inf(message, reason,                      __FILE__, __func__, __LINE__); }
 #   endif
 #else
     // Debug Core

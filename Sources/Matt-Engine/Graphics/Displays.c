@@ -35,7 +35,28 @@
 #include "Displays.h"
 #include <stdio.h>
 
-void testFirstSO() {
 
+MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
+    MGE_Window* window = (MGE_Window*) malloc(sizeof(MGE_Window));
+
+    if(!glfwInit()){
+        MGE_CORE_LOG_CRITICAL("Failed to start GLFW","glfwInit() returned other than true",1);
+    }
+
+    window->window = glfwCreateWindow(width, height, windowName, NULL, NULL);
+    if(!window->window){
+        glfwTerminate();
+        MGE_CORE_LOG_CRITICAL("Failed to create a GL Window context.","",3);
+    }
+
+    glfwMakeContextCurrent(window->window);
+
+    return window;
+}
+
+void MGE_deleteWindow(MGE_Window *window) {
+
+    glfwTerminate();
+    free(window);
 
 }

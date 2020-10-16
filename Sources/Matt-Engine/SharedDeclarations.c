@@ -60,10 +60,10 @@ void mge_core_log(const char* message, const char* reason, MGE_LogLevel level, c
 
     const char * levelText = decodeLogLevel(level);
 
-    fprintf(stderr, "MGE Core Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+    fprintf(stderr, "\nMGE Core Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
 
     if(level == CRITICAL){
-        fprintf(stderr, "Error was critical, code: %u. Exiting...", exitCode);
+        fprintf(stderr, "\nError was critical, code: %u. Exiting...", exitCode);
         exit(exitCode);
     }
 
@@ -74,10 +74,10 @@ void mge_app_log(const char* message, const char* reason, MGE_LogLevel level, co
 
     const char * levelText = decodeLogLevel(level);
 
-    fprintf(stderr, "MGE App Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+    fprintf(stderr, "\nMGE App Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
 
     if(level == CRITICAL){
-        fprintf(stderr, "Error was critical, code: %u. Exiting...", exitCode);
+        fprintf(stderr, "\nError was critical, code: %u. Exiting...", exitCode);
         exit(exitCode);
     }
 
@@ -87,14 +87,14 @@ void mge_app_log(const char* message, const char* reason, MGE_LogLevel level, co
 
 void mge_core_inf(const char *message, const char *reason, const char *file, const char *function, unsigned int line) {
 
-    fprintf(stdout, "MGE Core Info: Message %s, Reason %s", message, reason);
+    fprintf(stdout, "\nMGE Core Info: Message %s, Reason %s\n", message, reason);
     fflush(stdout);
 
 }
 
 void mge_app_inf(const char *message, const char *reason, const char *file, const char *function, unsigned int line) {
 
-    fprintf(stdout, "MGE Application Info: Message %s, Reason %s", message, reason);
+    fprintf(stdout, "\nMGE Application Info: Message %s, Reason %s\n", message, reason);
     fflush(stdout);
 
 }

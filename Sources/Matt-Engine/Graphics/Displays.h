@@ -35,6 +35,18 @@
 #ifndef MATTS_GAME_ENGINE_DISPLAYS_H
 #define MATTS_GAME_ENGINE_DISPLAYS_H
 
+#include <GL/gl.h>
+#include <GLFW/glfw3.h>
+#include <stdbool.h>
 
+typedef struct{
+
+    GLFWwindow* window;
+
+} MGE_Window;
+
+MGE_API MGE_Window* MGE_initWindow(int width, int height, const char* windowName);
+MGE_API void MGE_deleteWindow(MGE_Window* window);
+MGE_API inline bool MGE_windowShouldClose(MGE_Window* window) { return glfwWindowShouldClose(window->window); };
 
 #endif //MATTS_GAME_ENGINE_DISPLAYS_H

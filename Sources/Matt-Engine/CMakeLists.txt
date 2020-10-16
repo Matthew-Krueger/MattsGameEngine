@@ -27,13 +27,19 @@
 #  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL       #
 #  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR       #
 #  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER       #
-#  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,    #
+#  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRAC`T, STRICT LIABILITY,    #
 #  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE    #
-#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.             #
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIILITY OF SUCH DAMAGE.             #
 #####################################################################################
 
 set (MODULE_NAME "Matts_Game_Engine")
 
-add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Graphics/Displays.h SharedDeclarations.h include/Matts-Engine/Core.h SharedDeclarations.c include/Matts-Engine/RequiredGlobals.h)
+find_library(OpenGL REQUIRED)
+
+add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Graphics/Displays.h SharedDeclarations.h include/Matts-Engine/Core.h SharedDeclarations.c include/Matts-Engine/RequiredGlobals.h Utils/linmath.h Utils/pch.h Utils/pch.c)
+add_dependencies("${MODULE_NAME}" glfw glew_s)
+
 target_compile_definitions("${MODULE_NAME}" PRIVATE MGE_BUILD_LIBRARY)
-target_precompile_headers("${MODULE_NAME}" PUBLIC include/Matts-Engine/Core.h)
+target_precompile_headers("${MODULE_NAME}" PRIVATE Utils/pch.h)
+
+target_link_libraries("${MODULE_NAME}" GL glfw glew_s)

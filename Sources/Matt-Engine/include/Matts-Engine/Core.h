@@ -42,6 +42,7 @@ extern "C"{
 
 #include "../../SharedDeclarations.h"
 #include "../../Graphics/Displays.h"
+#include "../../Utils/linmath.h"
 
 #ifdef __cplusplus
 };

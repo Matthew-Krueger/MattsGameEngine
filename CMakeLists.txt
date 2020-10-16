@@ -32,7 +32,9 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.             #
 #####################################################################################
 
-
+#############################################
+#               PROJECT SETUP               #
+#############################################
 
 cmake_minimum_required(VERSION 3.16.3)
 project(Matts_Game_Engine C)
@@ -50,6 +52,18 @@ set(PATH_TO_ENGINE_SRC Sources/Matt-Engine)
 
 include_directories(${PATH_TO_ENGINE_SRC}/include)
 
+#############################################
+#               Dependencies                #
+#############################################
 
+add_subdirectory(Dependencies/glfw)
+add_subdirectory(Dependencies/glew-2.1.0/build/cmake)
+
+include_directories(Dependencies/glfw/include)
+include_directories(Dependencies/glew-2.1.0/include)
+
+#############################################
+#           Engine and Examples             #
+#############################################
 add_subdirectory(${PATH_TO_ENGINE_SRC})
 add_subdirectory(Sources/Examples)

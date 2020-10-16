@@ -32,8 +32,5 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.             #
 #####################################################################################
 
-set (MODULE_NAME "Example_StartupAndWindowing-${PROJECT_NAME}")
-
-
-add_executable("${MODULE_NAME}" StartupAndWindowing.c)
-target_link_libraries("${MODULE_NAME}" Matts_Game_Engine)
+add_subdirectory(ModernOpenGLWithGLEW)
+add_subdirectory(StartupAndWindowing)

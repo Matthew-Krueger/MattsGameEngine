@@ -15,10 +15,11 @@ To use the engine, add this to your `CMakeLists.txt`. The CMakeLists.txt used he
 add_subdirectory(path/to/CMakeLists.txt)
 target_link_libraries(YOUR_TARGET_NAME Matts_Game_Engine_Engine)
 ```
-For all files that implement the engine, please include the engine core in each file. `#include <Matts-Engine/Core.h>`
-For the file that contains your entry point, please also `#include <Matts-Engine/RequiredGlobals.h>`. This contains the
-required globals that must only be included in one translation unit. This file also includes core,
-so that include may be omitted if you like.
+###### Core.h
+Core.h must be included in every file that utilizes the engine. It must be included below RequiredGlobals. in your main.
+###### RequiredGlobals.h
+For the file that contains your entry point, please include `#include <Matts-Engine/RequiredGlobals.h>`. This contains the
+required globals that must only be included in one translation unit.
 
 ## License
 Matt's Game Engine is licensed under a `BSD 3-Clause License`. 
