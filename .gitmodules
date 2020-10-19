@@ -4,4 +4,4 @@
 	branch = 3.3-stable
 [submodule "Dependencies/glew"]
 	path = Dependencies/glew
-	url = git@gitlab.com:mckrueg/glew.git
+	url = https://gitlab.com/mckrueg/matt-engine.git
