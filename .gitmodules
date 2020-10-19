@@ -2,6 +2,3 @@
 	path = Dependencies/glfw
 	url = https://github.com/glfw/glfw.git
 	branch = 3.3-stable
-[submodule "Dependencies/glew"]
-	path = Dependencies/glew
-	url = https://gitlab.com/mckrueg/matt-engine.git
