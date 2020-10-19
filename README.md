@@ -7,7 +7,9 @@ This engine is designed to take advantage of OpenGL available in modern graphica
 This project is built using CMake. The actual engine is a shared library
 which is built as a dependency of all examples. To build just the SO or DLL,
 run cmake and build the target `Matts_Game_Engine_Engine`.
-
+### Required packages
+On a base ubuntu install, `libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev libglu-dev`
+are required.
 ## Using
 ##### TODO: Make a WIKI with information on using the engine.
 To use the engine, add this to your `CMakeLists.txt`. The CMakeLists.txt used here is the one in this folder.
