@@ -59,11 +59,11 @@ set(OpenGL_GL_PREFERENCE GLVND)
 #############################################
 
 add_subdirectory(Dependencies/glfw)
-add_subdirectory(Dependencies/glew/build/cmake)
+add_subdirectory(Dependencies/Matt-Glew/build/cmake)
 set_property(TARGET glew_s PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 include_directories(Dependencies/glfw/include)
-include_directories(Dependencies/glew/include)
+include_directories(Dependencies/Matt-Glew/include)
 
 #############################################
 #           Engine and Examples             #

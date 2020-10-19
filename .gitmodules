@@ -2,3 +2,6 @@
 	path = Dependencies/glfw
 	url = https://github.com/glfw/glfw.git
 	branch = 3.3-stable
+[submodule "Dependencies/Matt-Glew"]
+	path = Dependencies/Matt-Glew
+	url = https://github.com/matthapkidokarate/GLEWforMattsGameEngine.git
