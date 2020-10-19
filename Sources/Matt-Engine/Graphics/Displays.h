@@ -47,6 +47,6 @@ typedef struct{
 
 MGE_API MGE_Window* MGE_initWindow(int width, int height, const char* windowName);
 MGE_API void MGE_deleteWindow(MGE_Window* window);
-MGE_API inline bool MGE_windowShouldClose(MGE_Window* window) { return glfwWindowShouldClose(window->window); };
+MGE_API bool MGE_windowShouldClose(MGE_Window* window);
 
 #endif //MATTS_GAME_ENGINE_DISPLAYS_H

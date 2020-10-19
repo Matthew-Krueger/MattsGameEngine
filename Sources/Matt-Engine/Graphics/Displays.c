@@ -49,6 +49,15 @@ MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
         MGE_CORE_LOG_CRITICAL("Failed to create a GL Window context.","",3);
     }
 
+    GLenum err = glewInit();
+    if (GLEW_OK != err)
+    {
+        /* Problem: glewInit failed, something is seriously wrong. */
+        //fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+        MGE_CORE_LOG_CRITICAL("Error Stating GLEW",(const char *)glewGetErrorString(err),4);
+    }
+    fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
+
     glfwMakeContextCurrent(window->window);
 
     return window;
@@ -59,4 +68,9 @@ void MGE_deleteWindow(MGE_Window *window) {
     glfwTerminate();
     free(window);
 
+}
+
+
+bool MGE_windowShouldClose(MGE_Window* window){
+    return glfwWindowShouldClose(window->window);
 }
