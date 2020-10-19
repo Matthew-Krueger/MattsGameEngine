@@ -1,5 +1,6 @@
 #!/bin/bash
-
+echo "Ensuring Submodules are cloned."
+git submodule update --init --recursive || exit
 echo "Configuring CMake."
 mkdir -p Build
 cd Build || exit
