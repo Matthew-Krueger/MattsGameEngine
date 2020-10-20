@@ -58,12 +58,9 @@ set(OpenGL_GL_PREFERENCE GLVND)
 #               Dependencies                #
 #############################################
 
-add_subdirectory(Dependencies/glfw)
-add_subdirectory(Dependencies/Matt-Glew/build/cmake)
-set_property(TARGET glew_s PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-include_directories(Dependencies/glfw/include)
-include_directories(Dependencies/Matt-Glew/include)
+add_subdirectory(Dependencies/GL-Dependencies)
+include_directories(Dependencies/GL-Dependencies/GLFW-3.3/include)
+include_directories(Dependencies/GL-Dependencies/GLAD/include)
 
 #############################################
 #           Engine and Examples             #

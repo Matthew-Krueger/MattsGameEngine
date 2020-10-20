@@ -37,9 +37,9 @@ set (MODULE_NAME "Matts_Game_Engine")
 find_library(OpenGL REQUIRED)
 
 add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Graphics/Displays.h SharedDeclarations.h include/Matts-Engine/Core.h SharedDeclarations.c include/Matts-Engine/RequiredGlobals.h Utils/linmath.h Utils/pch.h Utils/pch.c)
-add_dependencies("${MODULE_NAME}" glfw glew_s)
+add_dependencies("${MODULE_NAME}" glfw GLAD)
 
 target_compile_definitions("${MODULE_NAME}" PRIVATE MGE_BUILD_LIBRARY)
 target_precompile_headers("${MODULE_NAME}" PRIVATE Utils/pch.h)
 
-target_link_libraries("${MODULE_NAME}" GL glfw glew_s)
+target_link_libraries("${MODULE_NAME}" GL glfw GLAD)

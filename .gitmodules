@@ -1,10 +1,3 @@
-[submodule "Dependencies/glfw"]
-	path = Dependencies/glfw
-	url = https://github.com/glfw/glfw.git
-	branch = 3.3-stable
-[submodule "Dependencies/Matt-Glew"]
-	path = Dependencies/Matt-Glew
-	url = https://github.com/matthapkidokarate/GLEWforMattsGameEngine.git
 [submodule "Dependencies/GL-Dependencies"]
 	path = Dependencies/GL-Dependencies
 	url = https://github.com/matthapkidokarate/MattsGameEngine-GL-Dependencies.git

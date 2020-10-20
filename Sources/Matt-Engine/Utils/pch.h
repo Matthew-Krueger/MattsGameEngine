@@ -36,8 +36,7 @@
 #ifndef MATTS_GAME_ENGINE_PCH_H
 #define MATTS_GAME_ENGINE_PCH_H
 
-#include <GL/glew.h>
-#include <GL/gl.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
