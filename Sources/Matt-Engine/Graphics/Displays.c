@@ -39,9 +39,16 @@
 MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
     MGE_Window* window = (MGE_Window*) malloc(sizeof(MGE_Window));
 
+    /* Init glfw and crash if unable */
     if(!glfwInit()){
+        glfwTerminate();
         MGE_CORE_LOG_CRITICAL("Failed to start GLFW","glfwInit() returned other than true",1);
     }
+
+    /* Do window hints for GLFW */
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     window->window = glfwCreateWindow(width, height, windowName, NULL, NULL);
     if(!window->window){
@@ -49,9 +56,17 @@ MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
         MGE_CORE_LOG_CRITICAL("Failed to create a GL Window context.","",3);
     }
 
-
-
     glfwMakeContextCurrent(window->window);
+
+    /* Init GLAD */
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        MGE_CORE_LOG_CRITICAL("Failed to load OpenGL with GLAD", "Glad GLL Loader could not get address of function pointers.",3);
+    }
+
+    /* Set glViewport to what we were given */
+    glViewport(0, 0, width, height);
+
+    glfwSetFramebufferSizeCallback(window->window, framebuffer_size_callback);
 
     return window;
 }
@@ -66,4 +81,8 @@ void MGE_deleteWindow(MGE_Window *window) {
 
 bool MGE_windowShouldClose(MGE_Window* window){
     return glfwWindowShouldClose(window->window);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height){
+    glViewport(0, 0, width, height);
 }

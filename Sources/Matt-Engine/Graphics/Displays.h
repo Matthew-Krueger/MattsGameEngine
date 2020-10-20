@@ -45,8 +45,34 @@ typedef struct{
 
 } MGE_Window;
 
+/**
+ * Initialize a GL Context with a width, height, and windowName
+ * @param width The Width of the new window to create.
+ * @param height The height of the new window to create.
+ * @param windowName The name of the window to create
+ * @return MGE_Window, a representation of the GLFWwindow
+ */
 MGE_API MGE_Window* MGE_initWindow(int width, int height, const char* windowName);
+
+/**
+ * Delete the memory and GL context associated with a window
+ * @param window
+ */
 MGE_API void MGE_deleteWindow(MGE_Window* window);
+
+/**
+ * Tests if a window should close
+ * @param window The window to check
+ * @return bool on whether the window should close
+ */
 MGE_API bool MGE_windowShouldClose(MGE_Window* window);
+
+/**
+ * The Callback for a Size Callback
+ * @param window
+ * @param width
+ * @param height
+ */
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 #endif //MATTS_GAME_ENGINE_DISPLAYS_H
