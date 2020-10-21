@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Dependencies/GL-Dependencies" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Dependencies/GL-Dependencies/GLFW-3.3" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Dependencies/Matt-Glew" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Dependencies/glew" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Dependencies/glfw" vcs="Git" />

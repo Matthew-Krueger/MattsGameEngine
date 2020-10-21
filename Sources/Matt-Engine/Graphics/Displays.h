@@ -68,11 +68,10 @@ MGE_API void MGE_deleteWindow(MGE_Window* window);
 MGE_API bool MGE_windowShouldClose(MGE_Window* window);
 
 /**
- * The Callback for a Size Callback
- * @param window
- * @param width
- * @param height
+ * Poll OpenGL for updates and swap the front and back buffers
+ * @param window The MGE_Window to do this to
  */
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+MGE_API void MGE_pollAndSwapBuffers(MGE_Window* window);
+
 
 #endif //MATTS_GAME_ENGINE_DISPLAYS_H

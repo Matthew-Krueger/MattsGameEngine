@@ -32,10 +32,9 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.             #
 #####################################################################################
 
-add_subdirectory(ModernOpenGLWithGLEW)
 add_subdirectory(StartupAndWindowing)
 
 if(NOT TARGET ${PROJECT_NAME}-Examples)
     add_custom_target(${PROJECT_NAME}-Examples)
-    add_dependencies(${PROJECT_NAME}-Examples Example_StartupAndWindowing-${PROJECT_NAME} Example_ModernOpenGLWithGLEW-${PROJECT_NAME})
+    add_dependencies(${PROJECT_NAME}-Examples Example_StartupAndWindowing-${PROJECT_NAME})
 endif()

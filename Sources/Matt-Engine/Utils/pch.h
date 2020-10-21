@@ -44,6 +44,7 @@
 #include "../SharedDeclarations.h"
 #include "linmath.h"
 
+#include "Callbacks.h"
 #include "../Graphics/Displays.h"
 
 #endif //MATTS_GAME_ENGINE_PCH_H

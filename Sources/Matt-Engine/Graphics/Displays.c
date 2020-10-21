@@ -46,9 +46,10 @@ MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
     }
 
     /* Do window hints for GLFW */
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     window->window = glfwCreateWindow(width, height, windowName, NULL, NULL);
     if(!window->window){
@@ -66,7 +67,7 @@ MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
     /* Set glViewport to what we were given */
     glViewport(0, 0, width, height);
 
-    glfwSetFramebufferSizeCallback(window->window, framebuffer_size_callback);
+    MGE_setWindowResizeCallback(window, framebufferSizeCallback);
 
     return window;
 }
@@ -83,6 +84,11 @@ bool MGE_windowShouldClose(MGE_Window* window){
     return glfwWindowShouldClose(window->window);
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height){
-    glViewport(0, 0, width, height);
+void MGE_pollAndSwapBuffers(MGE_Window *window) {
+
+    /* Swap buffers */
+    glfwSwapBuffers(window->window);
+
+    glfwPollEvents();
+
 }

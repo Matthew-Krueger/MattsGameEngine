@@ -32,21 +32,11 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include <Matts-Engine/RequiredGlobals.h>
-#include <Matts-Engine/Core.h>
+#include "Input.h"
 
-int main(int argc, char ** argv){
-
-    MGE_APP_INFO("Starting up Example Startup and Windowing.", "MGE");
-
-    MGE_Window* window = MGE_initWindow(1920,1080, "StartupAndWindowing");
-
-    while(!MGE_windowShouldClose(window)){
-
-
-
+bool MGE_isKeyDown(MGE_Window* window, int keyNumber) {
+    if(glfwGetKey(window->window, keyNumber) == GLFW_PRESS){
+        return true;
     }
-
-    MGE_deleteWindow(window);
-
+    return false;
 }

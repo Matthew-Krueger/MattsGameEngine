@@ -32,40 +32,19 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include <Matts-Engine/RequiredGlobals.h>
-#include <Matts-Engine/Core.h>
+#ifndef MATTS_GAME_ENGINE_CALLBACKS_H
+#define MATTS_GAME_ENGINE_CALLBACKS_H
 
-void runRenderLoop(MGE_Window* window);
+#include "../Graphics/Displays.h"
 
-int main(int argc, char ** argv){
+MGE_API void MGE_setWindowResizeCallback(MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height));
 
-    MGE_APP_INFO("Starting up Example Startup and Windowing.", "");
-    float vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f,  0.5f, 0.0f
-    };
+/**
+ * The Callback for a Size Callback
+ * @param window
+ * @param width
+ * @param height
+ */
+void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 
-    MGE_Window* window = MGE_initWindow(1920,1080, "StartupAndWindowing");
-
-    while(!MGE_windowShouldClose(window)){
-
-
-        /* Test for input */
-        if(MGE_isKeyDown(window, MGE_KEY_ESCAPE))
-            glfwSetWindowShouldClose(window->window, true);
-
-        runRenderLoop(window);
-
-        MGE_pollAndSwapBuffers(window);
-
-    }
-
-    MGE_deleteWindow(window);
-
-}
-
-void runRenderLoop(MGE_Window* window){
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-}
+#endif //MATTS_GAME_ENGINE_CALLBACKS_H
