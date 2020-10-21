@@ -32,23 +32,34 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_CALLBACKS_H
-#define MATTS_GAME_ENGINE_CALLBACKS_H
+#ifndef MATTS_GAME_ENGINE_LOADER_H
+#define MATTS_GAME_ENGINE_LOADER_H
 
-#include "../Graphics/Displays.h"
+#define VERTEX_ATTRIB_POSITION_LOCATION 0
 
-MGE_API void MGE_setWindowResizeCallback(MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height));
-MGE_API void MGE_setDebugMessageCallback(void (*errorCallback)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam));
+typedef struct{
+    GLuint vboID;
+} MGE_VBO;
 
+typedef struct{
+    GLuint vaoID;
+    GLsizei length;
+    MGE_VBO vertices, indices;
+} MGE_RawModel;
 
 /**
- * The Callback for a Size Callback
- * @param window
- * @param width
- * @param height
+ * Load positions to the GPU
+ * @param positions The array of positions vectors
+ * @param positionsSize The size of the positions (number of vertices, not number of floats)
+ * @return A constructed RawModel
  */
-void MGE_framebufferSizeCallback(GLFWwindow* window, int width, int height);
+MGE_API MGE_RawModel MGE_loadToVAO(MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
+MGE_API GLuint MGE_createVAO();
 
-MGE_API void MGE_debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
+MGE_API MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
 
-#endif //MATTS_GAME_ENGINE_CALLBACKS_H
+MGE_API MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector* data, GLsizeiptr size );
+MGE_API void MGE_unbindVAO();
+
+
+#endif //MATTS_GAME_ENGINE_LOADER_H

@@ -46,8 +46,8 @@ MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
     }
 
     /* Do window hints for GLFW */
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
@@ -67,7 +67,10 @@ MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
     /* Set glViewport to what we were given */
     glViewport(0, 0, width, height);
 
-    MGE_setWindowResizeCallback(window, framebufferSizeCallback);
+    MGE_setWindowResizeCallback(window, MGE_framebufferSizeCallback);
+    MGE_setDebugMessageCallback(MGE_debugMessageCallback);
+
+    MGE_CORE_INFO("OpenGL Version", (const char *)glGetString(GL_VERSION));
 
     return window;
 }

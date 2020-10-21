@@ -34,28 +34,46 @@
 
 #include <Matts-Engine/RequiredGlobals.h>
 #include <Matts-Engine/Core.h>
+#include <z3.h>
+#include <stdlib.h>
 
-void runRenderLoop(MGE_Window* window);
+void runRenderLoop(MGE_Window* window, MGE_RawModel rawModel);
 
 int main(int argc, char ** argv){
 
     MGE_APP_INFO("Starting up Example Startup and Windowing.", "");
-    float vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f,  0.5f, 0.0f
-    };
 
     MGE_Window* window = MGE_initWindow(1920,1080, "StartupAndWindowing");
 
-    while(!MGE_windowShouldClose(window)){
+    GLuint indices[] = {
+            0,1,3,
+            3,1,2
+    };
 
+    MGE_PositionVector vertex1, vertex2, vertex3, vertex4;
+    vertex1.vector[0] = -0.5f;
+    vertex1.vector[1] = 0.5f;
+    vertex1.vector[2] = 0.0f;
+    vertex2.vector[0] = -0.5f;
+    vertex2.vector[1] = -0.5f;
+    vertex2.vector[2] = 0.0f;
+    vertex3.vector[0] = 0.5f;
+    vertex3.vector[1] = -0.5f;
+    vertex3.vector[2] = 0.0f;
+    vertex4.vector[0] = .5f;
+    vertex4.vector[1] = .5f;
+    vertex4.vector[2] = 0.0f;
+    MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
+
+    MGE_RawModel model = MGE_loadToVAO(vertices, 3, indices, 6);
+
+    while(!MGE_windowShouldClose(window)){
 
         /* Test for input */
         if(MGE_isKeyDown(window, MGE_KEY_ESCAPE))
             glfwSetWindowShouldClose(window->window, true);
 
-        runRenderLoop(window);
+        runRenderLoop(window, model);
 
         MGE_pollAndSwapBuffers(window);
 
@@ -65,7 +83,10 @@ int main(int argc, char ** argv){
 
 }
 
-void runRenderLoop(MGE_Window* window){
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+void runRenderLoop(MGE_Window* window, MGE_RawModel model){
+
+    MGE_prepareFrame();
+
+    MGE_renderRawModel(model);
+
 }

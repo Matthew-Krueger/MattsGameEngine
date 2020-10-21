@@ -32,23 +32,54 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_CALLBACKS_H
-#define MATTS_GAME_ENGINE_CALLBACKS_H
+#include "Loader.h"
 
-#include "../Graphics/Displays.h"
+MGE_RawModel MGE_loadToVAO(MGE_PositionVector *positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize) {
+    MGE_RawModel result;
 
-MGE_API void MGE_setWindowResizeCallback(MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height));
-MGE_API void MGE_setDebugMessageCallback(void (*errorCallback)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam));
+    result.vaoID = MGE_createVAO();
+    result.indices = MGE_bindIndicesBuffer(indices, indicesSize);
+    result.vertices = MGE_storeDataInAttributeList(VERTEX_ATTRIB_POSITION_LOCATION, positions, positionsSize);
+    result.length = indicesSize;
 
+    return result;
+}
 
-/**
- * The Callback for a Size Callback
- * @param window
- * @param width
- * @param height
- */
-void MGE_framebufferSizeCallback(GLFWwindow* window, int width, int height);
+GLuint MGE_createVAO() {
+    GLuint result;
+    glGenVertexArrays(1, &result);
+    glBindVertexArray(result);
+    return result;
+}
 
-MGE_API void MGE_debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
+MGE_VBO MGE_bindIndicesBuffer(GLuint *indices, GLsizeiptr size) {
 
-#endif //MATTS_GAME_ENGINE_CALLBACKS_H
+    MGE_VBO vbo;
+    glGenBuffers(1, &vbo.vboID);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.vboID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+
+    return vbo;
+
+}
+
+MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector *data, GLsizeiptr size) {
+
+    MGE_VBO vbo;
+    glGenBuffers(1, &vbo.vboID);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo.vboID);
+
+    glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(attributeNumber, 3, GL_FLOAT, GL_FALSE, sizeof(MGE_PositionVector), 0);
+    glEnableVertexAttribArray(attributeNumber);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    return vbo;
+
+}
+
+void MGE_unbindVAO() {
+    glBindVertexArray(0);
+}

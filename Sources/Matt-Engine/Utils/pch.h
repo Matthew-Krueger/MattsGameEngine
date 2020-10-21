@@ -43,8 +43,12 @@
 
 #include "../SharedDeclarations.h"
 #include "linmath.h"
+#include "../Graphics/Vertices.h"
+#include "Loader.h"
+
 
 #include "Callbacks.h"
 #include "../Graphics/Displays.h"
+#include "../Graphics/Rendering.h"
 
 #endif //MATTS_GAME_ENGINE_PCH_H

@@ -32,23 +32,18 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_CALLBACKS_H
-#define MATTS_GAME_ENGINE_CALLBACKS_H
-
-#include "../Graphics/Displays.h"
-
-MGE_API void MGE_setWindowResizeCallback(MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height));
-MGE_API void MGE_setDebugMessageCallback(void (*errorCallback)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam));
+#include "Rendering.h"
 
 
-/**
- * The Callback for a Size Callback
- * @param window
- * @param width
- * @param height
- */
-void MGE_framebufferSizeCallback(GLFWwindow* window, int width, int height);
+void MGE_prepareFrame() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+}
 
-MGE_API void MGE_debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
+void MGE_renderRawModel(MGE_RawModel model) {
 
-#endif //MATTS_GAME_ENGINE_CALLBACKS_H
+    glBindVertexArray(model.vaoID);
+    glDrawElements(GL_TRIANGLES, model.length, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+}
