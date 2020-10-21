@@ -34,7 +34,6 @@
 
 #include <Matts-Engine/RequiredGlobals.h>
 #include <Matts-Engine/Core.h>
-#include <z3.h>
 #include <stdlib.h>
 
 void runRenderLoop(MGE_Window* window, MGE_RawModel rawModel);
