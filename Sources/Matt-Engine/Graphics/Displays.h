@@ -56,7 +56,7 @@ typedef struct{
  * @param width The Width of the new window to create.
  * @param height The height of the new window to create.
  * @param windowName The name of the window to create
- * @return MGE_Window, a representation of the GLFWwindow
+ * @return {\link MGE_Window MGE_Window* \endlink}, a representation of the GLFWwindow
  */
 MGE_API MGE_Window* MGE_initWindow(int width, int height, const char* windowName);
 

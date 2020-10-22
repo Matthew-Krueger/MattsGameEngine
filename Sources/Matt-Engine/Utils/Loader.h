@@ -49,11 +49,11 @@ typedef struct{
 
 /**
  * Load positions to the GPU
- * @param {\link MGE_PositionVector} positions The array of positions vectors.
+ * @param \link MGE_PositionVector MGE_PositionVector \endlink positions The array of positions vectors.
  * @param GLsizeiptr positionsSize The size of the positions (number of vertices, not number of floats).
  * @param indices GLuint the array of indices that represent the model.
  * @param indicesSize GLsizeiptr the size of the indices array.
- * @return {\link MGE_RawModel} A constructed RawModel
+ * @return \link MGE_RawModel MGE_RawModel \endlink A constructed RawModel
  */
 MGE_API MGE_RawModel MGE_loadToVAO(MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
 
