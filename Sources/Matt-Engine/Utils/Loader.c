@@ -39,7 +39,7 @@ MGE_RawModel MGE_loadToVAO(MGE_PositionVector *positions, GLsizeiptr positionsSi
 
     result.vaoID = MGE_createVAO();
     result.indices = MGE_bindIndicesBuffer(indices, indicesSize);
-    result.vertices = MGE_storeDataInAttributeList(VERTEX_ATTRIB_POSITION_LOCATION, positions, positionsSize);
+    result.vertices = MGE_storeDataInAttributeList(VERTEX_ATTRIB_POSITION_LOCATION, positions, positionsSize, GL_FLOAT);
     result.length = indicesSize;
 
     return result;
