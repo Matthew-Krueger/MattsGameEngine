@@ -10,5 +10,16 @@ pipeline {
             }
         }
     }
+    stage(‘Success’) {
+      when {
+        expression { doError == ‘0’ }
+      }
+      steps {
+        sh 'echo "Deploying Doxygen"'
+        sh 'chmod +x Scripts/Jenkins-Deploy-Doxygen.sh'
+        sh 'Scripts/Jenkins-Deploy-Doxygen.sh JenkinsRun'
+      }
+    }
+  }
 
 }

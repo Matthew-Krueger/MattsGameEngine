@@ -67,3 +67,18 @@ include_directories(Dependencies/GL-Dependencies/GLAD/include)
 #############################################
 add_subdirectory(${PATH_TO_ENGINE_SRC})
 add_subdirectory(Sources/Examples)
+
+#############################################
+#            Doxygen Generation             #
+#############################################
+set(DOXYGEN_GENERATE_HTML YES)
+set(DOXYGEN_CALLER_GRAPH YES)
+set(DOXYGEN_CALL_GRAPH YES)
+set(DOXYGEN_EXTRACT_ALL YES)
+set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Docs")
+set(DOXYGEN_EXCLUDE_PATTERNS ",,*/Docs/*,*/cmake-build-debug/*,*/cmake-build-release/*,*/Dependencies/*")
+set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
+set(DOXYGEN_UML_LOOK YES)
+
+find_package(Doxygen REQUIRED dot)
+doxygen_add_docs(${PROJECT_NAME}-Doxygen "${CMAKE_SOURCE_DIR}")

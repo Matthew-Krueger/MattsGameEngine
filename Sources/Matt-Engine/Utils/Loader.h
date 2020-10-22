@@ -49,17 +49,22 @@ typedef struct{
 
 /**
  * Load positions to the GPU
- * @param positions The array of positions vectors
- * @param positionsSize The size of the positions (number of vertices, not number of floats)
- * @return A constructed RawModel
+ * @param {\link MGE_PositionVector} positions The array of positions vectors.
+ * @param GLsizeiptr positionsSize The size of the positions (number of vertices, not number of floats).
+ * @param indices GLuint the array of indices that represent the model.
+ * @param indicesSize GLsizeiptr the size of the indices array.
+ * @return {\link MGE_RawModel} A constructed RawModel
  */
 MGE_API MGE_RawModel MGE_loadToVAO(MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
-MGE_API GLuint MGE_createVAO();
 
-MGE_API MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
-
-MGE_API MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector* data, GLsizeiptr size );
-MGE_API void MGE_unbindVAO();
+/**
+ * Creates a VBO in graphics memory and returns the id.
+ * @return GLuint the VBO id.
+ */
+GLuint MGE_createVAO();
+MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
+MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector* data, GLsizeiptr size );
+void MGE_unbindVAO();
 
 
 #endif //MATTS_GAME_ENGINE_LOADER_H
