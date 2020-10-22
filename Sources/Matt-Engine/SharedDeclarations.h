@@ -82,7 +82,7 @@ typedef enum{
  * Logs a message from the CORE, i.e. the engine. Please use MGE_CORE_LOG_LEVEL
  * @param message The message to log
  * @param reason The reason for the log
- * @param level The {\link MGE_LogLevel} of the log
+ * @param level The \link MGE_LogLevel MGE_LogLevel \endlink of the log
  * @param file The file in which it occurred
  * @param function The function in which it occurred
  * @param line The line on which it occurred
@@ -94,7 +94,7 @@ MGE_API void mge_core_log(const char * message, const char * reason, MGE_LogLeve
  * Logs a message from the CORE, i.e. the engine. Please use MGE_APP_LOG_LEVEL
  * @param message The message to log
  * @param reason The reason for the log
- * @param level The {\link MGE_LogLevel} of the log
+ * @param level The \link MGE_LogLevel MGE_LogLevel \endlink of the log
  * @param file The file in which it occurred
  * @param function The function in which it occurred
  * @param line The line on which it occurred
