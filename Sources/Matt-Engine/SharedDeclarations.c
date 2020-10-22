@@ -32,6 +32,8 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
+#include "include/Matts-Engine/RequiredGlobals.h"
+
 #include "SharedDeclarations.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,6 +63,8 @@ void mge_core_log(const char* message, const char* reason, MGE_LogLevel level, c
     const char * levelText = decodeLogLevel(level);
 
     fprintf(stderr, "\nMGE Core Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+    fprintf(MGE_CORE_LOG, "\nMGE App Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+
 
     if(level == CRITICAL){
         fprintf(stderr, "\nError was critical, code: %u. Exiting...", exitCode);
@@ -75,6 +79,7 @@ void mge_app_log(const char* message, const char* reason, MGE_LogLevel level, co
     const char * levelText = decodeLogLevel(level);
 
     fprintf(stderr, "\nMGE App Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
+    fprintf(MGE_APP_LOG, "\nMGE App Error %s ERROR in %s:%u\n Function: %s\n Message: %s\n Reason: %s\n", levelText, file, line, function, message, reason);
 
     if(level == CRITICAL){
         fprintf(stderr, "\nError was critical, code: %u. Exiting...", exitCode);
@@ -93,7 +98,8 @@ void mge_core_inf(const char *message, const char *reason, const char *file, con
     }
 
     fprintf(stdout, "\nMGE Core Info: Message %s%s\n", message, reasonFinal);
-    fflush(stdout);
+    fprintf(MGE_CORE_LOG, "\nMGE Core Info: Message %s%s\n", message, reasonFinal);
+
 
     free(reasonFinal);
 
@@ -101,21 +107,22 @@ void mge_core_inf(const char *message, const char *reason, const char *file, con
 
 void mge_app_inf(const char *message, const char *reason, const char *file, const char *function, unsigned int line) {
 
-    char * reasonFinal = (char *)calloc(300,sizeof(char));
+    char * reasonFinal = calloc(300,sizeof(char));
     if(reason[0] != '\0'){
         sprintf(reasonFinal, ", Reason %s", reason);
     }
 
     fprintf(stdout, "\nMGE Application Info: Message %s%s\n", message, reasonFinal);
-    fflush(stdout);
+    fprintf(MGE_APP_LOG, "\nMGE Core Info: Message %s%s\n", message, reasonFinal);
 
     free(reasonFinal);
 
 }
 
-void mge_init(const char *mge_engineLogFile, const char *mge_appLogFile) {
+void MGE_logInit(const char *mge_engineLogFile, const char *mge_appLogFile) {
 
-
+    MGE_CORE_LOG = fopen(mge_engineLogFile, "w+");
+    MGE_APP_LOG = fopen(mge_appLogFile, "w+");
 
 }
 

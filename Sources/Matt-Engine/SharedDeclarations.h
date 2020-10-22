@@ -184,7 +184,7 @@ MGE_API void mge_app_inf(const char * message, const char * reason, const char *
  * @param mge_engineLogFile The file to log engine errors to
  * @param mge_appLogFile The file to log app errors to
  */
-MGE_API void mge_init(const char * mge_engineLogFile, const char * mge_appLogFile);
+MGE_API void MGE_logInit(const char * mge_engineLogFile, const char * mge_appLogFile);
 
 /* Debugging assertions and traps
  * Portable Snippets - https://github.com/nemequ/portable-snippets

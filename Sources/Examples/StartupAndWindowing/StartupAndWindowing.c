@@ -40,6 +40,8 @@ void runRenderLoop(MGE_Window* window, MGE_RawModel rawModel);
 
 int main(int argc, char ** argv){
 
+    MGE_logInit("core.log","startupAndWindowing.log");
+
     MGE_APP_INFO("Starting up Example Startup and Windowing.", "");
 
     MGE_Window* window = MGE_initWindow(1920,1080, "StartupAndWindowing");
