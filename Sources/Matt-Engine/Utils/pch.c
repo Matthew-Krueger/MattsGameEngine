@@ -33,3 +33,5 @@
 ************************************************************************************/
 
 #include "pch.h"
+
+/* Necessary for MSVC to use a precompiled header */

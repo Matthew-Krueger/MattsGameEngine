@@ -35,7 +35,15 @@
 #ifndef MATTS_GAME_ENGINE_RENDERING_H
 #define MATTS_GAME_ENGINE_RENDERING_H
 
+/**
+ * Prepares the frame for rendering by clearing the color buffer bit and setting a default color
+ */
 MGE_API void MGE_prepareFrame();
+
+/**
+ * Renders a raw model to the display
+ * @param model The model to render
+ */
 MGE_API void MGE_renderRawModel(MGE_RawModel model);
 
 #endif //MATTS_GAME_ENGINE_RENDERING_H

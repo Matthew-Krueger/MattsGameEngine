@@ -56,7 +56,7 @@
 #else
 #   if __GNUC__ >= 4
 #       define MGE_API __attribute__ ((visibility ("default"))) extern
-#       define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
+#       define MGE_API_HIDDEN  __attribute__ ((visibility ("hidden")))
 #   else
 #       define MGE_API
 #       define MGE_API_HIDDEN
@@ -78,10 +78,48 @@ typedef enum{
     CRITICAL
 } MGE_LogLevel;
 
-
+/**
+ * Logs a message from the CORE, i.e. the engine. Please use MGE_CORE_LOG_LEVEL
+ * @param message The message to log
+ * @param reason The reason for the log
+ * @param level The {\link MGE_LogLevel} of the log
+ * @param file The file in which it occurred
+ * @param function The function in which it occurred
+ * @param line The line on which it occurred
+ * @param exitCode The exit code if it is {\link MGE_LogLevel::CRITICAL}
+ */
 MGE_API void mge_core_log(const char * message, const char * reason, MGE_LogLevel level, const char * file, const char * function, unsigned int line, int exitCode);
+
+/**
+ * Logs a message from the CORE, i.e. the engine. Please use MGE_APP_LOG_LEVEL
+ * @param message The message to log
+ * @param reason The reason for the log
+ * @param level The {\link MGE_LogLevel} of the log
+ * @param file The file in which it occurred
+ * @param function The function in which it occurred
+ * @param line The line on which it occurred
+ * @param exitCode The exit code if it is {\link MGE_LogLevel::CRITICAL}
+ */
 MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel level, const char * file, const char * function, unsigned int line, int exitCode);
+
+/**
+ * Logs a message from core. No level required. Always runs with MGE_CORE_INFO
+ * @param message The message to log
+ * @param reason The reason for the log
+ * @param file The file in which it occurred
+ * @param function The function in which it occurred
+ * @param line The line on which it occurred
+ */
 MGE_API void mge_core_inf(const char * message, const char * reason, const char * file, const char * function, unsigned int line);
+
+/**
+ * Logs a message from core. No level required. Always runs with MGE_APP_INFO
+ * @param message The message to log
+ * @param reason The reason for the log
+ * @param file The file in which it occurred
+ * @param function The function in which it occurred
+ * @param line The line on which it occurred
+ */
 MGE_API void mge_app_inf(const char * message, const char * reason, const char * file, const char * function, unsigned int line);
 
 
@@ -141,6 +179,11 @@ MGE_API void mge_app_inf(const char * message, const char * reason, const char *
 #       define MGE_APP_INFO(message, reason)                    {                                             mge_app_inf(message, reason,                       __FILE__, __func__, __LINE__); }
 #endif
 
+/**
+ * Initializes the files that the logging functions will log to. Currently unused
+ * @param mge_engineLogFile The file to log engine errors to
+ * @param mge_appLogFile The file to log app errors to
+ */
 MGE_API void mge_init(const char * mge_engineLogFile, const char * mge_appLogFile);
 
 /* Debugging assertions and traps

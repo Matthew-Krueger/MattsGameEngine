@@ -64,7 +64,7 @@ MGE_VBO MGE_bindIndicesBuffer(GLuint *indices, GLsizeiptr size) {
 
 }
 
-MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector *data, GLsizeiptr size) {
+MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector *data, GLsizeiptr size, GLenum typeOfData) {
 
     MGE_VBO vbo;
     glGenBuffers(1, &vbo.vboID);
@@ -72,7 +72,7 @@ MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector 
 
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(attributeNumber, 3, GL_FLOAT, GL_FALSE, sizeof(MGE_PositionVector), 0);
+    glVertexAttribPointer(attributeNumber, 3, typeOfData, GL_FALSE, sizeof(MGE_PositionVector), 0);
     glEnableVertexAttribArray(attributeNumber);
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
 

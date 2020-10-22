@@ -39,8 +39,14 @@
 #include <GLFW/glfw3.h>
 #include <stdbool.h>
 
+/**
+ * A representation of the window (wrapped for ease)
+ */
 typedef struct{
 
+    /**
+     * The actual window context from GLFW
+     */
     GLFWwindow* window;
 
 } MGE_Window;
