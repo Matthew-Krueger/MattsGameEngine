@@ -9,12 +9,12 @@ pipeline {
                 archiveArtifacts artifacts: 'Build/bin/*', fingerprint: true
             }
         }
-    }
-    post {
-        success {
-            sh 'echo "Deploying Doxygen"'
-            sh 'chmod +x Scripts/Jenkins-Deploy-Doxygen.sh'
-            sh 'Scripts/Jenkins-Deploy-Doxygen.sh JenkinsRun'
+        stage('Deploy Doxygen'){
+            steps{
+                sh 'echo "Deploying Doxygen"'
+                sh 'chmod +x Scripts/Jenkins-Deploy-Doxygen.sh'
+                sh 'Scripts/Jenkins-Deploy-Doxygen.sh JenkinsRun'
+            }
         }
     }
 
