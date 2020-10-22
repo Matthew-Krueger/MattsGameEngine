@@ -10,5 +10,5 @@ rm -rf "$DOXYGEN_EXPORT_PATH" || exit
 mkdir -p "$DOXYGEN_EXPORT_PATH" || exit
 
 echo "Copying Doxygen to web server"
-cp -r Docs/* "$DOXYGEN_EXPORT_PATH"
+cp -r Docs/html/* "$DOXYGEN_EXPORT_PATH"
 echo "Doxygen Copied to web server"
