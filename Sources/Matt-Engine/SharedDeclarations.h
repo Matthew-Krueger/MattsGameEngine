@@ -86,7 +86,7 @@ typedef enum{
  * @param file The file in which it occurred
  * @param function The function in which it occurred
  * @param line The line on which it occurred
- * @param exitCode The exit code if it is {\link MGE_LogLevel::CRITICAL}
+ * @param exitCode The exit code if it is \link MGE_LogLevel::CRITICAL MGE_LogLevel::CRITICAL \endlink
  */
 MGE_API void mge_core_log(const char * message, const char * reason, MGE_LogLevel level, const char * file, const char * function, unsigned int line, int exitCode);
 
@@ -98,7 +98,7 @@ MGE_API void mge_core_log(const char * message, const char * reason, MGE_LogLeve
  * @param file The file in which it occurred
  * @param function The function in which it occurred
  * @param line The line on which it occurred
- * @param exitCode The exit code if it is {\link MGE_LogLevel::CRITICAL}
+ * @param exitCode The exit code if it is \link MGE_LogLevel::CRITICAL MGE_LogLevel::CRITICAL \endlink
  */
 MGE_API void mge_app_log(const char * message, const char * reason, MGE_LogLevel level, const char * file, const char * function, unsigned int line, int exitCode);
 
