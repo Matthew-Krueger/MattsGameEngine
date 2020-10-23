@@ -71,7 +71,7 @@ MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector 
     glBindBuffer(GL_ARRAY_BUFFER, vbo.vboID);
 
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-    glVertexAttribPointer(attributeNumber, 3, typeOfData, GL_FALSE, sizeof(MGE_PositionVector), 0);
+    glVertexAttribPointer(attributeNumber, 3, typeOfData, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(attributeNumber);
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
 
