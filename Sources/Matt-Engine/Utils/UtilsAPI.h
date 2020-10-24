@@ -1,39 +1,11 @@
-/************************************************************************************
-* Matt's Game Engine is licensed under a BSD 3-Clause License                       *
-*                                                                                   *
-* BSD 3-Clause License                                                              *
-*                                                                                   *
-* Copyright (c) 2020, Matthew Krueger                                               *
-* All rights reserved.                                                              *
-*                                                                                   *
-* Redistribution and use in source and binary forms, with or without                *
-* modification, are permitted provided that the following conditions are met:       *
-*                                                                                   *
-* 1. Redistributions of source code must retain the above copyright notice, this    *
-*    list of conditions and the following disclaimer.                               *
-*                                                                                   *
-* 2. Redistributions in binary form must reproduce the above copyright notice,      *
-*    this list of conditions and the following disclaimer in the documentation      *
-*    and/or other materials provided with the distribution.                         *
-*                                                                                   *
-* 3. Neither the name of the copyright holder nor the names of its                  *
-*    contributors may be used to endorse or promote products derived from           *
-*    this software without specific prior written permission.                       *
-*                                                                                   *
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"       *
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE         *
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE    *
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE      *
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL        *
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR        *
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER        *
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,     *
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE     *
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
-************************************************************************************/
+//
+// Created by matth on 10/24/20.
+//
 
-#ifndef MATTS_GAME_ENGINE_INPUT_H
-#define MATTS_GAME_ENGINE_INPUT_H
+#ifndef MATTS_GAME_ENGINE_UTILSAPI_H
+#define MATTS_GAME_ENGINE_UTILSAPI_H
+
+#include "../Graphics/GraphicsAPI.h"
 
 /* Defines from GLFW, remapped to MGE */
 #define 	MGE_KEY_UNKNOWN   -1
@@ -159,12 +131,66 @@
 #define 	MGE_KEY_MENU   348
 #define 	MGE_KEY_LAST   GLFW_KEY_MENU
 
+#include "Vertices.h"
+struct MGE_RawModel;
+
 /**
  * Asks the kernel if the specified key id is down
  * @param window The window context to ask about
  * @param keyNumber The Key Number. Use GLFW_KEY_WHATEVER
  * @return if the key is down
  */
-MGE_API bool MGE_isKeyDown(MGE_Window* window, int keyNumber);
+MGE_API bool MGE_isKeyDown(struct MGE_Window* window, int keyNumber);
 
-#endif //MATTS_GAME_ENGINE_INPUT_H
+/**
+ * Load positions to the GPU
+ * @param \link MGE_PositionVector MGE_PositionVector \endlink positions The array of positions vectors.
+ * @param GLsizeiptr positionsSize The size of the positions (number of vertices, not number of floats).
+ * @param indices GLuint the array of indices that represent the model.
+ * @param indicesSize GLsizeiptr the size of the indices array.
+ * @return \link MGE_RawModel MGE_RawModel \endlink A constructed RawModel
+ */
+MGE_API struct MGE_RawModel MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
+
+/**
+ * Unload from the Graphics Memory the Raw Model
+ * @param model
+ */
+MGE_API void MGE_unloadFromVAO(struct MGE_RawModel model);
+
+/**
+ * Sets a window resize callback.
+ * @param window The window to set the callback on
+ * @param windowResizeCallback The Callback to set
+ */
+MGE_API void MGE_windowSetSizeCallback(struct MGE_Window* window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height));
+
+/**
+ * Set an error callback for OpenGL
+ * @param errorCallback The Error Callback to set
+ */
+MGE_API void MGE_windowSetDebugCallback(void (*errorCallback)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam));
+
+
+/**
+ * The Callback for a window size change
+ * @param window OpenGL Provided Value
+ * @param width OpenGL Provided Value
+ * @param height OpenGL Provided Value
+ */
+MGE_API void MGE_windowDefaultSizeCallback(GLFWwindow* window, int width, int height);
+
+/**
+ * Provides a callback for OpenGL errors, and uses severe error log
+ * @param source OpenGL Provided Value
+ * @param type OpenGL Provided Value
+ * @param id OpenGL Provided Value
+ * @param severity OpenGL Provided Value
+ * @param length OpenGL Provided Value
+ * @param message OpenGL Provided Value
+ * @param userParam OpenGL Provided Value
+ */
+MGE_API void MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
+
+
+#endif //MATTS_GAME_ENGINE_UTILSAPI_H

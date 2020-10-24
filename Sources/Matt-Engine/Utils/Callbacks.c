@@ -32,13 +32,15 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "Callbacks.h"
-void MGE_setWindowResizeCallback(MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height)) {
+#include "UtilsAPI.h"
+#include "../Graphics/GraphicsInternal.h"
+
+void MGE_windowSetSizeCallback(struct MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height)) {
     glfwSetFramebufferSizeCallback(window->window, windowResizeCallback);
 }
 
 
-void MGE_setDebugMessageCallback(
+void MGE_windowSetDebugCallback(
         void (*errorCallback)(GLenum, GLenum, GLuint, GLenum, GLsizei, const GLchar *, const void *)) {
 
     //MGE_CORE_LOG_TRACE("GL DebugMessageCallback", "Setting glDebugMessageCallback");
@@ -55,8 +57,8 @@ void MGE_setDebugMessageCallback(
 
 
 void
-MGE_debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
-                         const void *userParam) {
+MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
+                               const void *userParam) {
 
     char* _source;
     char* _type;
@@ -158,6 +160,6 @@ MGE_debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
     free(buffer);
 }
 
-void MGE_framebufferSizeCallback(GLFWwindow* window, int width, int height){
+void MGE_windowDefaultSizeCallback(GLFWwindow* window, int width, int height){
     glViewport(0, 0, width, height);
 }

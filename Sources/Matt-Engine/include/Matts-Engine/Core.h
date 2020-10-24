@@ -41,18 +41,9 @@ extern "C"{
 #endif
 
 #include "../../Utils/linmath.h"
-#include "../../SharedDeclarations.h"
-#include "../../Graphics/Vertices.h"
-#include "../../Graphics/Displays.h"
-#include "../../Utils/linmath.h"
-#include "../../Utils/Callbacks.h"
-#include "../../Utils/Input.h"
+#include "../../Utils/UsefulMacros.h"
 
-#include "../../Graphics/ShaderManagement.h"
-
-#include "../../Utils/Loader.h"
-
-#include "../../Graphics/Rendering.h"
+#include "../../EngineAPI.h"
 
 
 #ifdef __cplusplus

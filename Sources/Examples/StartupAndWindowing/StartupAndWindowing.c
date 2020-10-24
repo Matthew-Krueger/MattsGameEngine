@@ -36,8 +36,8 @@
 #include <Matts-Engine/Core.h>
 #include <stdlib.h>
 
-void runRenderLoop(MGE_Window* window, MGE_RawModel rawModel, MGE_ShaderProgram* shader);
-void bindAttributes(MGE_ShaderProgram* program);
+void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel rawModel, struct MGE_ShaderProgram* shader);
+void bindAttributes(struct MGE_ShaderProgram* program);
 
 int main(int argc, char ** argv){
 
@@ -45,14 +45,14 @@ int main(int argc, char ** argv){
 
     MGE_APP_INFO("Starting up Example Startup and Windowing.", "");
 
-    MGE_Window* window = MGE_initWindow(1920,1080, "StartupAndWindowing");
+    struct MGE_Window* window = MGE_windowInit(1920, 1080, "StartupAndWindowing");
 
     GLuint indices[] = {
             0,1,3,
             3,1,2
     };
 
-    MGE_PositionVector vertex1, vertex2, vertex3, vertex4;
+    struct MGE_PositionVector vertex1, vertex2, vertex3, vertex4;
     vertex1.vector[0] = -0.5f;
     vertex1.vector[1] = 0.5f;
     vertex1.vector[2] = 0.0f;
@@ -65,37 +65,37 @@ int main(int argc, char ** argv){
     vertex4.vector[0] = .5f;
     vertex4.vector[1] = .5f;
     vertex4.vector[2] = 0.0f;
-    MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
+    struct MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
 
-    MGE_RawModel model = MGE_loadToVAO(vertices, 4, indices, 6);
-    MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Shaders/RainbowShader.vert.glsl", "Shaders/RainbowShader.frag.glsl", bindAttributes);
+    struct MGE_RawModel model = MGE_loadToVAO(vertices, 4, indices, 6);
+    struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Shaders/RainbowShader.vert.glsl", "Shaders/RainbowShader.frag.glsl", bindAttributes);
 
     while(!MGE_windowShouldClose(window)){
 
         /* Test for input */
         if(MGE_isKeyDown(window, MGE_KEY_ESCAPE))
-            glfwSetWindowShouldClose(window->window, true);
+            MGE_windowSetShouldClose(window);
 
         runRenderLoop(window, model, shader);
 
-        MGE_pollAndSwapBuffers(window);
+        MGE_windowFinalize(window);
 
     }
 
     MGE_unloadFromVAO(model);
     MGE_freeShaderProgram(shader);
-    MGE_deleteWindow(window);
+    MGE_windowDelete(window);
 
 }
 
-void bindAttributes(MGE_ShaderProgram* program){
+void bindAttributes(struct MGE_ShaderProgram* program){
 
     MGE_APP_INFO("Binding Attributes", "Binding Attributes of shader");
     MGE_shaderBindAttribute(program, 0, "position");
 
 }
 
-void runRenderLoop(MGE_Window* window, MGE_RawModel model, MGE_ShaderProgram* shader){
+void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel model, struct MGE_ShaderProgram* shader){
 
     MGE_prepareFrame();
     MGE_shaderStart(shader);

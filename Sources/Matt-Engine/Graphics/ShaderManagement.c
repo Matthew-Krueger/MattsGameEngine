@@ -32,7 +32,8 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "ShaderManagement.h"
+#include "GraphicsInternal.h"
+#include "GraphicsAPI.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,9 +43,9 @@
 #endif
 
 
-MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char *vertexShaderPath, const char *fragmentShaderPath, void (*bindAttributes)(MGE_ShaderProgram*)) {
+struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char *vertexShaderPath, const char *fragmentShaderPath, void (*bindAttributes)(struct MGE_ShaderProgram*)) {
 
-    MGE_ShaderProgram* result = malloc(sizeof(MGE_ShaderProgram));
+    struct MGE_ShaderProgram* result = malloc(sizeof(struct MGE_ShaderProgram));
 
     MGE_shaderRead(vertexShaderPath, &result->vertexShaderSource.shaderSource, &result->vertexShaderSource.length);
     MGE_shaderRead(fragmentShaderPath, &result->fragmentShaderSource.shaderSource, &result->fragmentShaderSource.length);
@@ -57,7 +58,7 @@ MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char *vertexShaderPath, 
 }
 
 
-MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(MGE_ShaderProgram* target) {
+struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderProgram* target) {
 
     target->vertexShaderID = MGE_shaderLoad(target->vertexShaderSource.shaderSource, GL_VERTEX_SHADER);
     target->fragmentShaderID = MGE_shaderLoad(target->fragmentShaderSource.shaderSource, GL_FRAGMENT_SHADER);
@@ -97,7 +98,7 @@ MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(MGE_ShaderProgram* target)
 
 
 
-void MGE_freeShaderProgram(MGE_ShaderProgram* shaderProgram) {
+void MGE_freeShaderProgram(struct MGE_ShaderProgram* shaderProgram) {
 
     MGE_shaderStop();
 
@@ -200,7 +201,7 @@ GLuint MGE_shaderLoad(const char* source, GLenum type) {
 
 }
 
-void MGE_shaderStart(MGE_ShaderProgram *shaderProgram) {
+void MGE_shaderStart(struct MGE_ShaderProgram *shaderProgram) {
     glUseProgram(shaderProgram->programID);
 }
 
@@ -208,6 +209,6 @@ void MGE_shaderStop() {
     glUseProgram(0);
 }
 
-void MGE_shaderBindAttribute(MGE_ShaderProgram *shaderProgram, GLuint attribute, const char *variableName) {
+void MGE_shaderBindAttribute(struct MGE_ShaderProgram *shaderProgram, GLuint attribute, const char *variableName) {
     glBindAttribLocation(shaderProgram->programID, attribute, variableName);
 }

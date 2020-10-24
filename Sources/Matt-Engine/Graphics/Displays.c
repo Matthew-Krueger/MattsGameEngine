@@ -32,12 +32,14 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "Displays.h"
+#include "../Utils/UtilsAPI.h"
+#include "GraphicsInternal.h"
 #include <stdio.h>
 
 
-MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
-    MGE_Window* window = (MGE_Window*) malloc(sizeof(MGE_Window));
+
+struct MGE_Window* MGE_windowInit(int width, int height, const char* windowName) {
+    struct MGE_Window* window = malloc(sizeof(struct MGE_Window));
 
     /* Init glfw and crash if unable */
     if(!glfwInit()){
@@ -67,15 +69,15 @@ MGE_Window* MGE_initWindow(int width, int height, const char* windowName) {
     /* Set glViewport to what we were given */
     glViewport(0, 0, width, height);
 
-    MGE_setWindowResizeCallback(window, MGE_framebufferSizeCallback);
-    MGE_setDebugMessageCallback(MGE_debugMessageCallback);
+    MGE_windowSetSizeCallback(window, MGE_windowDefaultSizeCallback);
+    MGE_windowSetDebugCallback(MGE_windowDefaultDebugCallback);
 
     MGE_CORE_INFO("OpenGL Version", (const char *)glGetString(GL_VERSION));
 
     return window;
 }
 
-void MGE_deleteWindow(MGE_Window *window) {
+void MGE_windowDelete(struct MGE_Window *window) {
 
     glfwTerminate();
     free(window);
@@ -83,11 +85,15 @@ void MGE_deleteWindow(MGE_Window *window) {
 }
 
 
-bool MGE_windowShouldClose(MGE_Window* window){
+bool MGE_windowShouldClose(struct MGE_Window* window){
     return glfwWindowShouldClose(window->window);
 }
 
-void MGE_pollAndSwapBuffers(MGE_Window *window) {
+void MGE_windowSetShouldClose(struct MGE_Window* window){
+
+}
+
+void MGE_windowFinalize(struct MGE_Window *window) {
 
     /* Swap buffers */
     glfwSwapBuffers(window->window);

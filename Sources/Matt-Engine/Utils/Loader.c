@@ -32,10 +32,11 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "Loader.h"
+#include "UtilsAPI.h"
+#include "UtilsInternal.h"
 
-MGE_RawModel MGE_loadToVAO(MGE_PositionVector *positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize) {
-    MGE_RawModel result;
+struct MGE_RawModel MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize) {
+    struct MGE_RawModel result;
 
     result.vaoID = MGE_createVAO();
     result.indices = MGE_bindIndicesBuffer(indices, indicesSize);
@@ -46,7 +47,7 @@ MGE_RawModel MGE_loadToVAO(MGE_PositionVector *positions, GLsizeiptr positionsSi
 }
 
 
-void MGE_unloadFromVAO(MGE_RawModel model) {
+void MGE_unloadFromVAO(struct MGE_RawModel model) {
 
     glBindVertexArray(model.vaoID);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -64,9 +65,9 @@ GLuint MGE_createVAO() {
     return result;
 }
 
-MGE_VBO MGE_bindIndicesBuffer(GLuint *indices, GLsizeiptr size) {
+struct MGE_VBO MGE_bindIndicesBuffer(GLuint *indices, GLsizeiptr size) {
 
-    MGE_VBO vbo;
+    struct MGE_VBO vbo;
     glGenBuffers(1, &vbo.vboID);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.vboID);
@@ -76,32 +77,19 @@ MGE_VBO MGE_bindIndicesBuffer(GLuint *indices, GLsizeiptr size) {
 
 }
 
-MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector *data, GLsizeiptr size, GLenum typeOfData) {
+struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, struct MGE_PositionVector* data, GLsizeiptr size, GLenum typeOfData) {
 
-    MGE_VBO vbo;
+    struct MGE_VBO vbo;
     glGenBuffers(1, &vbo.vboID);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo.vboID);
 
     char buf2[5];
     sprintf(buf2, "%ld", size);
-    MGE_CORE_INFO("VBO id", buf2);
 
     void* rawData = (void*) data;
-    //MGE_DEBUG_BREAK();
 
-    //float* rawData = (float*)data;
-
-    /*for(size_t i=0; i<12*sizeof(float); i += sizeof(float)){
-        char* buf = calloc(30, sizeof(char));
-        float* f = (float*) (rawData+(i));
-        gcvt(*f, 30, buf);
-        MGE_CORE_INFO("Loading a float to the GPU", buf)
-        free(buf);
-        fflush(stdout);
-    }*/
-
-    glBufferData(GL_ARRAY_BUFFER, size*sizeof(MGE_PositionVector), rawData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, size*sizeof(struct MGE_PositionVector), rawData, GL_STATIC_DRAW);
     glVertexAttribPointer(attributeNumber, 3, typeOfData, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(attributeNumber);
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
