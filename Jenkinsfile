@@ -6,7 +6,7 @@ pipeline {
                 sh 'echo "Building..."'
                 sh 'chmod +x Scripts/Linux-Build.sh'
                 sh 'Scripts/Linux-Build.sh -da'
-                archiveArtifacts artifacts: 'Build/bin/*', fingerprint: true
+                archiveArtifacts artifacts: 'Build/bin/artifacts/*', fingerprint: true
             }
         }
         stage('Deploy Doxygen'){
