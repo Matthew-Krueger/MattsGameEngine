@@ -58,6 +58,12 @@ typedef struct{
 MGE_API MGE_RawModel MGE_loadToVAO(MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
 
 /**
+ * Unload from the Graphics Memory the Raw Model
+ * @param model
+ */
+MGE_API void MGE_unloadFromVAO(MGE_RawModel model);
+
+/**
  * Creates a VBO in graphics memory and returns the id.
  * @return GLuint the VBO id.
  */

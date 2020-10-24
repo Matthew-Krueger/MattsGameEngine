@@ -36,7 +36,8 @@
 #include <Matts-Engine/Core.h>
 #include <stdlib.h>
 
-void runRenderLoop(MGE_Window* window, MGE_RawModel rawModel);
+void runRenderLoop(MGE_Window* window, MGE_RawModel rawModel, MGE_ShaderProgram* shader);
+void bindAttributes(MGE_ShaderProgram* program);
 
 int main(int argc, char ** argv){
 
@@ -66,7 +67,8 @@ int main(int argc, char ** argv){
     vertex4.vector[2] = 0.0f;
     MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
 
-    MGE_RawModel model = MGE_loadToVAO(vertices, 3, indices, 6);
+    MGE_RawModel model = MGE_loadToVAO(vertices, 4, indices, 6);
+    MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Shaders/RainbowShader.vert.glsl", "Shaders/RainbowShader.frag.glsl", bindAttributes);
 
     while(!MGE_windowShouldClose(window)){
 
@@ -74,20 +76,30 @@ int main(int argc, char ** argv){
         if(MGE_isKeyDown(window, MGE_KEY_ESCAPE))
             glfwSetWindowShouldClose(window->window, true);
 
-        runRenderLoop(window, model);
+        runRenderLoop(window, model, shader);
 
         MGE_pollAndSwapBuffers(window);
 
     }
 
+    MGE_unloadFromVAO(model);
+    MGE_freeShaderProgram(shader);
     MGE_deleteWindow(window);
 
 }
 
-void runRenderLoop(MGE_Window* window, MGE_RawModel model){
+void bindAttributes(MGE_ShaderProgram* program){
+
+    MGE_APP_INFO("Binding Attributes", "Binding Attributes of shader");
+    MGE_shaderBindAttribute(program, 0, "position");
+
+}
+
+void runRenderLoop(MGE_Window* window, MGE_RawModel model, MGE_ShaderProgram* shader){
 
     MGE_prepareFrame();
-
+    MGE_shaderStart(shader);
     MGE_renderRawModel(model);
+    MGE_shaderStop();
 
 }

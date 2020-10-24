@@ -45,6 +45,18 @@ MGE_RawModel MGE_loadToVAO(MGE_PositionVector *positions, GLsizeiptr positionsSi
     return result;
 }
 
+
+void MGE_unloadFromVAO(MGE_RawModel model) {
+
+    glBindVertexArray(model.vaoID);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    glDeleteVertexArrays(1, &model.vaoID);
+    glDeleteBuffers(1,&model.vertices.vboID);
+
+}
+
 GLuint MGE_createVAO() {
     GLuint result;
     glGenVertexArrays(1, &result);
@@ -58,7 +70,7 @@ MGE_VBO MGE_bindIndicesBuffer(GLuint *indices, GLsizeiptr size) {
     glGenBuffers(1, &vbo.vboID);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.vboID);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size*sizeof(GLuint), indices, GL_STATIC_DRAW);
 
     return vbo;
 
@@ -68,9 +80,28 @@ MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector 
 
     MGE_VBO vbo;
     glGenBuffers(1, &vbo.vboID);
+
     glBindBuffer(GL_ARRAY_BUFFER, vbo.vboID);
 
-    glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+    char buf2[5];
+    sprintf(buf2, "%ld", size);
+    MGE_CORE_INFO("VBO id", buf2);
+
+    void* rawData = (void*) data;
+    //MGE_DEBUG_BREAK();
+
+    //float* rawData = (float*)data;
+
+    /*for(size_t i=0; i<12*sizeof(float); i += sizeof(float)){
+        char* buf = calloc(30, sizeof(char));
+        float* f = (float*) (rawData+(i));
+        gcvt(*f, 30, buf);
+        MGE_CORE_INFO("Loading a float to the GPU", buf)
+        free(buf);
+        fflush(stdout);
+    }*/
+
+    glBufferData(GL_ARRAY_BUFFER, size*sizeof(MGE_PositionVector), rawData, GL_STATIC_DRAW);
     glVertexAttribPointer(attributeNumber, 3, typeOfData, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(attributeNumber);
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -82,3 +113,4 @@ MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector 
 void MGE_unbindVAO() {
     glBindVertexArray(0);
 }
+

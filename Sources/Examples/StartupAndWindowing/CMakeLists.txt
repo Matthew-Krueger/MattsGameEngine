@@ -34,6 +34,17 @@
 
 set (MODULE_NAME "Example_StartupAndWindowing-${PROJECT_NAME}")
 
+set (OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/Examples/${MODULE_NAME})
+set (SHADER_SRC_DIR ${CMAKE_SOURCE_DIR}/Sources/Examples/StartupAndWindowing/Shaders/)
+set (SHADER_DST_DIR ${OUTPUT_DIR}/Shaders/)
 
 add_executable("${MODULE_NAME}" StartupAndWindowing.c)
 target_link_libraries("${MODULE_NAME}" Matts_Game_Engine)
+
+set_target_properties(${MODULE_NAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR}
+        )
+
+add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${SHADER_SRC_DIR} ${SHADER_DST_DIR}
+        )
