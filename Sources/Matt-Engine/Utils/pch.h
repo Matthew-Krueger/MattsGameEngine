@@ -44,6 +44,6 @@
 #include "linmath.h"
 
 #include "UsefulMacros.h"
-#include "Logging/EngineLogger.h"
+#include "../Logging/EngineLogger.h"
 
 #endif //MATTS_GAME_ENGINE_PCH_H

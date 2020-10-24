@@ -32,51 +32,27 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_UTILSINTERNAL_H
-#define MATTS_GAME_ENGINE_UTILSINTERNAL_H
+#ifndef MATTS_GAME_ENGINE_SHAREDLOGSTRUCTS_H
+#define MATTS_GAME_ENGINE_SHAREDLOGSTRUCTS_H
 
-#include "UtilsAPI.h"
-#include "Vertices.h"
-
-#define VERTEX_ATTRIB_POSITION_LOCATION 0
-
-struct MGE_VBO{
-    GLuint vboID;
-};
-
-struct MGE_RawModel{
-    GLuint vaoID;
-    GLsizei length;
-    struct MGE_VBO vertices, indices;
-};
+/**
+ * The Log Levels of the logger. Calling MGE_*_LOG_CRITICAL will cause a crash.
+ */
+typedef enum{
+    TRACE,
+    INFO,
+    FINE,
+    WARN,
+    SEVERE,
+    CRITICAL
+} MGE_LogLevel;
 
 
 /**
- * Creates a VBO in graphics memory and returns the id.
- * @return GLuint the VBO id.
+ * Initializes the files that the logging functions will log to. Currently unused
+ * @param mge_engineLogFile The file to log engine errors to
+ * @param mge_appLogFile The file to log app errors to
  */
-MGE_API_HIDDEN GLuint MGE_createVAO();
+MGE_API void MGE_logInit(const char * mge_engineLogFile, const char * mge_appLogFile);
 
-/**
- * Binds an indices buffer
- * @param indices The array of indices
- * @param ize The size of the array
- * @return A VBO id of the index array
- */
-MGE_API_HIDDEN struct MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
-
-/**
- * Stores GL_FLOAT in an attribute list
- * @param attributeNumber The attribute number to store it in
- * @param data The data to write to GPU memory
- * @param size The size of the data to write
- * @return A VBO ID of the attribute list
- */
-MGE_API_HIDDEN struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, struct MGE_PositionVector* data, GLsizeiptr size, GLenum typeOfData);
-
-/**
- * Helper to unbind the current VAO
- */
-MGE_API_HIDDEN void MGE_unbindVAO();
-
-#endif //MATTS_GAME_ENGINE_UTILSINTERNAL_H
+#endif //MATTS_GAME_ENGINE_SHAREDLOGSTRUCTS_H
