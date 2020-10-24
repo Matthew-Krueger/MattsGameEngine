@@ -32,7 +32,7 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "UtilsAPI.h"
+#include "UtilsInternal.h"
 #include "../Graphics/GraphicsInternal.h"
 
 bool MGE_isKeyDown(struct MGE_Window* window, int keyNumber) {

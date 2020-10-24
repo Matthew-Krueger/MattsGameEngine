@@ -32,7 +32,7 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "UtilsAPI.h"
+#include "UtilsInternal.h"
 #include "../Graphics/GraphicsInternal.h"
 
 void MGE_windowSetSizeCallback(struct MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height)) {

@@ -32,7 +32,6 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "UtilsAPI.h"
 #include "UtilsInternal.h"
 
 struct MGE_RawModel* MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize) {

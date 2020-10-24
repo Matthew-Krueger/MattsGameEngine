@@ -35,6 +35,7 @@
 #ifndef MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
 #define MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
 
+struct MGE_PositionVector;
 struct MGE_Window;
 struct MGE_ShaderProgram;
 struct MGE_RawModel;
