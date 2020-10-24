@@ -36,7 +36,7 @@
 #include <Matts-Engine/Core.h>
 #include <stdlib.h>
 
-void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel rawModel, struct MGE_ShaderProgram* shader);
+void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel* rawModel, struct MGE_ShaderProgram* shader);
 void bindAttributes(struct MGE_ShaderProgram* program);
 
 int main(int argc, char ** argv){
@@ -67,7 +67,7 @@ int main(int argc, char ** argv){
     vertex4.vector[2] = 0.0f;
     struct MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
 
-    struct MGE_RawModel model = MGE_loadToVAO(vertices, 4, indices, 6);
+    struct MGE_RawModel* model = MGE_loadToVAO(vertices, 4, indices, 6);
     struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Shaders/RainbowShader.vert.glsl", "Shaders/RainbowShader.frag.glsl", bindAttributes);
 
     while(!MGE_windowShouldClose(window)){
@@ -78,12 +78,12 @@ int main(int argc, char ** argv){
 
         runRenderLoop(window, model, shader);
 
-        MGE_windowFinalize(window);
+        MGE_windowUpdate(window);
 
     }
 
-    MGE_unloadFromVAO(model);
-    MGE_freeShaderProgram(shader);
+    MGE_rawModelFree(model);
+    MGE_shaderProgramFree(shader);
     MGE_windowDelete(window);
 
 }
@@ -95,7 +95,7 @@ void bindAttributes(struct MGE_ShaderProgram* program){
 
 }
 
-void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel model, struct MGE_ShaderProgram* shader){
+void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel* model, struct MGE_ShaderProgram* shader){
 
     MGE_prepareFrame();
     MGE_shaderStart(shader);

@@ -98,7 +98,7 @@ struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderPr
 
 
 
-void MGE_freeShaderProgram(struct MGE_ShaderProgram* shaderProgram) {
+void MGE_shaderProgramFree(struct MGE_ShaderProgram* shaderProgram) {
 
     MGE_shaderStop();
 

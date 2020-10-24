@@ -35,8 +35,6 @@
 #ifndef MATTS_GAME_ENGINE_UTILSAPI_H
 #define MATTS_GAME_ENGINE_UTILSAPI_H
 
-#include "../Graphics/GraphicsAPI.h"
-
 /* Defines from GLFW, remapped to MGE */
 #define 	MGE_KEY_UNKNOWN   -1
 #define 	MGE_KEY_SPACE   32
@@ -161,8 +159,8 @@
 #define 	MGE_KEY_MENU   348
 #define 	MGE_KEY_LAST   GLFW_KEY_MENU
 
+#include "../EngineForwardDecls.h"
 #include "Vertices.h"
-struct MGE_RawModel;
 
 /**
  * Asks the kernel if the specified key id is down
@@ -172,7 +170,7 @@ struct MGE_RawModel;
  */
 MGE_API bool MGE_isKeyDown(struct MGE_Window* window, int keyNumber);
 
-/**
+/**Vertices
  * Load positions to the GPU
  * @param \link MGE_PositionVector MGE_PositionVector \endlink positions The array of positions vectors.
  * @param GLsizeiptr positionsSize The size of the positions (number of vertices, not number of floats).
@@ -180,13 +178,13 @@ MGE_API bool MGE_isKeyDown(struct MGE_Window* window, int keyNumber);
  * @param indicesSize GLsizeiptr the size of the indices array.
  * @return \link MGE_RawModel MGE_RawModel \endlink A constructed RawModel
  */
-MGE_API struct MGE_RawModel MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
+MGE_API struct MGE_RawModel* MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
 
 /**
  * Unload from the Graphics Memory the Raw Model
  * @param model
  */
-MGE_API void MGE_unloadFromVAO(struct MGE_RawModel model);
+MGE_API void MGE_rawModelFree(struct MGE_RawModel* model);
 
 /**
  * Sets a window resize callback.

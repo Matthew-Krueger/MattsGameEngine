@@ -93,7 +93,7 @@ void MGE_windowSetShouldClose(struct MGE_Window* window){
 
 }
 
-void MGE_windowFinalize(struct MGE_Window *window) {
+void MGE_windowUpdate(struct MGE_Window *window) {
 
     /* Swap buffers */
     glfwSwapBuffers(window->window);

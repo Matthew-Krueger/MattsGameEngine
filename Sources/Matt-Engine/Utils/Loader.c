@@ -35,26 +35,28 @@
 #include "UtilsAPI.h"
 #include "UtilsInternal.h"
 
-struct MGE_RawModel MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize) {
-    struct MGE_RawModel result;
+struct MGE_RawModel* MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize) {
+    struct MGE_RawModel* result = malloc(sizeof(struct MGE_RawModel));
 
-    result.vaoID = MGE_createVAO();
-    result.indices = MGE_bindIndicesBuffer(indices, indicesSize);
-    result.vertices = MGE_storeDataInAttributeList(VERTEX_ATTRIB_POSITION_LOCATION, positions, positionsSize, GL_FLOAT);
-    result.length = indicesSize;
+    result->vaoID = MGE_createVAO();
+    result->indices = MGE_bindIndicesBuffer(indices, indicesSize);
+    result->vertices = MGE_storeDataInAttributeList(VERTEX_ATTRIB_POSITION_LOCATION, positions, positionsSize, GL_FLOAT);
+    result->length = indicesSize;
 
     return result;
 }
 
 
-void MGE_unloadFromVAO(struct MGE_RawModel model) {
+void MGE_rawModelFree(struct MGE_RawModel* model) {
 
-    glBindVertexArray(model.vaoID);
+    glBindVertexArray(model->vaoID);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-    glDeleteVertexArrays(1, &model.vaoID);
-    glDeleteBuffers(1,&model.vertices.vboID);
+    glDeleteVertexArrays(1, &model->vaoID);
+    glDeleteBuffers(1,&model->vertices.vboID);
+
+    free(model);
 
 }
 

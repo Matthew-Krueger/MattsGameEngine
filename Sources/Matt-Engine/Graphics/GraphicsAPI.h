@@ -35,11 +35,7 @@
 #ifndef MATTS_GAME_ENGINE_GRAPHICSAPI_H
 #define MATTS_GAME_ENGINE_GRAPHICSAPI_H
 
-#include "../Utils/UtilsInternal.h"
-
-struct MGE_Window;
-struct MGE_ShaderProgram;
-
+#include "../EngineForwardDecls.h"
 
 /**
  * Initialize a GL Context with a width, height, and windowName
@@ -69,7 +65,7 @@ MGE_API void MGE_windowSetShouldClose(struct MGE_Window* window);
  * Poll OpenGL for updates and swap the front and back buffers
  * @param window The MGE_Window to do this to
  */
-MGE_API void MGE_windowFinalize(struct MGE_Window* window);
+MGE_API void MGE_windowUpdate(struct MGE_Window* window);
 
 
 /**
@@ -81,7 +77,7 @@ MGE_API void MGE_prepareFrame();
  * Renders a raw model to the display
  * @param model The model to render
  */
-MGE_API void MGE_renderRawModel(struct MGE_RawModel model);
+MGE_API void MGE_renderRawModel(struct MGE_RawModel* model);
 
 /**
  *
@@ -118,7 +114,7 @@ MGE_API void MGE_shaderStop();
  * Frees a shader program and deletes everything from memory
  * @param shaderProgram The shader program to delete
  */
-MGE_API void MGE_freeShaderProgram(struct MGE_ShaderProgram* shaderProgram);
+MGE_API void MGE_shaderProgramFree(struct MGE_ShaderProgram* shaderProgram);
 
 /**
  * Binds an attribute to a part of the shader
