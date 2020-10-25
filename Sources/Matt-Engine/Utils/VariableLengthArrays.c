@@ -32,20 +32,54 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
-#define MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
+#include "UtilsInternal.h"
 
-// Model stuff
-struct MGE_PositionVector;
-struct MGE_TextureCoordVector;
-struct MGE_RawModel;
-struct MGE_Texture;
-struct MGE_TexturedModel;
+struct MGE_VariableLengthArray* MGE_variableLengthArrayCreate(){
 
+    struct MGE_VariableLengthArray* result = malloc(sizeof(struct MGE_VariableLengthArray));
 
-struct MGE_Window;
-struct MGE_ShaderProgram;
+    result->length = 0;
+    result->bufLen = 1;
+    result->buffer = malloc(sizeof(void**)*1);
 
-struct MGE_VariableLengthArray;
+    return result;
 
-#endif //MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
+}
+
+void MGE_variableLengthArrayPush(struct MGE_VariableLengthArray* array, void* value){
+
+    size_t newSize = array->length;
+    ++newSize;
+
+    if(newSize>array->bufLen){
+        size_t newBufLen = array->bufLen * VLA_GROTH_FACTOR + 1;
+        array->buffer = realloc(array->buffer, newBufLen*sizeof(void*));
+        array->bufLen = newBufLen;
+    }
+
+    array->buffer[array->length] = value;
+    array->length=newSize;
+
+}
+
+void* MGE_variableLengthArrayPop(struct MGE_VariableLengthArray* array){
+
+    void* result = array->buffer[array->length-1];
+    --array->length;
+
+    return result;
+
+}
+
+void* MGE_variableLengthArrayPeek(struct MGE_VariableLengthArray* array){
+
+    return array->buffer[array->length-1];
+
+}
+
+void MGE_variableLengthArrayFree(struct MGE_VariableLengthArray* array){
+
+    free(array->buffer);
+    free(array);
+
+}

@@ -41,6 +41,8 @@
 #define VERTEX_ATTRIB_POSITION_LOCATION 0
 #define VERTEX_ATTRIB_TEXTURE_COORD_LOCATION 1
 
+#define VLA_GROTH_FACTOR 1.5
+
 struct MGE_VBO{
     GLuint vboID;
 };
@@ -62,6 +64,12 @@ struct MGE_Texture{
 struct MGE_TexturedModel{
     struct MGE_RawModel* rawModel;
     struct MGE_Texture* baseColorTexture;
+};
+
+struct MGE_VariableLengthArray{
+    size_t length;
+    size_t bufLen;
+    void** buffer;
 };
 
 

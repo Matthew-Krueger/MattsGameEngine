@@ -36,7 +36,7 @@ set (MODULE_NAME "Matts_Game_Engine")
 
 find_library(OpenGL REQUIRED)
 
-add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Utils/UsefulMacros.h include/Matts-Engine/Core.h Logging/Logging.c include/Matts-Engine/RequiredGlobals.h Utils/linmath.h Utils/pch.h Utils/pch.c Utils/Callbacks.c Utils/Input.c Utils/Loader.c Graphics/Rendering.c Graphics/ShaderManagement.c Graphics/GraphicsInternal.h Graphics/GraphicsAPI.h Utils/UtilsAPI.h Utils/UtilsInternal.h Logging/EngineLogger.h EngineAPI.h Logging/SharedLogStructs.h Logging/AppLogger.h Utils/Vertices.h EngineForwardDecls.h)
+add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Utils/UsefulMacros.h include/Matts-Engine/Core.h Logging/Logging.c include/Matts-Engine/RequiredGlobals.h Utils/linmath.h Utils/pch.h Utils/pch.c Utils/Callbacks.c Utils/Input.c Utils/Loader.c Graphics/Rendering.c Graphics/ShaderManagement.c Graphics/GraphicsInternal.h Graphics/GraphicsAPI.h Utils/UtilsAPI.h Utils/UtilsInternal.h Logging/EngineLogger.h EngineAPI.h Logging/SharedLogStructs.h Logging/AppLogger.h Utils/Vertices.h EngineForwardDecls.h Utils/VariableLengthArrays.c)
 add_dependencies("${MODULE_NAME}" glfw GLAD STB_LIB)
 
 target_compile_definitions("${MODULE_NAME}" PRIVATE MGE_BUILD_LIBRARY)

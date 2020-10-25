@@ -51,21 +51,7 @@ int main(int argc, char ** argv){
             0,1,3,
             3,1,2
     };
-
-    struct MGE_PositionVector vertex1, vertex2, vertex3, vertex4;
-    vertex1.vector[0] = -0.5f;
-    vertex1.vector[1] = 0.5f;
-    vertex1.vector[2] = 0.0f;
-    vertex2.vector[0] = -0.5f;
-    vertex2.vector[1] = -0.5f;
-    vertex2.vector[2] = 0.0f;
-    vertex3.vector[0] = 0.5f;
-    vertex3.vector[1] = -0.5f;
-    vertex3.vector[2] = 0.0f;
-    vertex4.vector[0] = .5f;
-    vertex4.vector[1] = .5f;
-    vertex4.vector[2] = 0.0f;
-    struct MGE_PositionVector verticesPositions[4] = {vertex1, vertex2, vertex3, vertex4};
+    struct MGE_PositionVector verticesPositions[4] = {{-.5f,.5f,0.0f}, {-.5f,-.5f,0.0f}, {0.5f,-0.5f,0.0f}, {.5f,.5f,0.0f}};
     struct MGE_TextureCoordVector verticesTextureCoords[4] = {{0,0},{0,1},{1,1},{1,0}};
 
     struct MGE_RawModel* model = MGE_rawModelLoadToVAO(verticesPositions, 4, indices, 6, verticesTextureCoords);

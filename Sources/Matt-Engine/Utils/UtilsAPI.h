@@ -270,5 +270,41 @@ MGE_API void MGE_windowDefaultSizeCallback(GLFWwindow* window, int width, int he
  */
 MGE_API void MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
 
+/**
+ * \brief Creates a variable length array to add objects to.
+ * \note This array does not have a data type. It will not keep track of that for you.
+ * @return The array newly created
+ */
+MGE_API struct MGE_VariableLengthArray* MGE_variableLengthArrayCreate();
+
+/**
+ * \brief Pushes a value onto the end of the variable length array
+ * @param array The array to push the value onto
+ * @param value The value to push onto the array
+ */
+MGE_API void MGE_variableLengthArrayPush(struct MGE_VariableLengthArray* array, void* value);
+
+/**
+ * \brief Pops a value from the end of a variable length array
+ * \note Unlike Peek, pop does remove the value from the array
+ * @param array The array to pop the last value off of
+ * @return The value that was on the end of the array
+ */
+MGE_API void* MGE_variableLengthArrayPop(struct MGE_VariableLengthArray* array);
+
+/**
+ * \brief Peeks at the top value of a variable length.
+ * \note Does not remove the value from the array
+ * @param array The array to peek at
+ * @return The value that has been peeked
+ */
+MGE_API void * MGE_variableLengthArrayPeek(struct MGE_VariableLengthArray* array);
+
+/**
+ * \brief Frees a variable length array
+ * \note Does NOT free the components, pop the whole list then free
+ * @param array The array to free
+ */
+MGE_API void MGE_variableLengthArrayFree(struct MGE_VariableLengthArray* array);
 
 #endif //MATTS_GAME_ENGINE_UTILSAPI_H
