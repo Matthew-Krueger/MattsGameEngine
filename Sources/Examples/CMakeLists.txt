@@ -33,8 +33,9 @@
 #####################################################################################
 
 add_subdirectory(StartupAndWindowing)
+add_subdirectory(Texturing)
 
 if(NOT TARGET ${PROJECT_NAME}-Examples)
     add_custom_target(${PROJECT_NAME}-Examples)
-    add_dependencies(${PROJECT_NAME}-Examples Example_StartupAndWindowing-${PROJECT_NAME})
+    add_dependencies(${PROJECT_NAME}-Examples Example_StartupAndWindowing-${PROJECT_NAME} Example_Texturing-${PROJECT_NAME})
 endif()

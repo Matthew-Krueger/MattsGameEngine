@@ -45,6 +45,13 @@ struct MGE_RawModel* MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizei
     return result;
 }
 
+struct MGE_Texture* MGE_loadTextureFromFile(const char * filePath){
+    struct MGE_Texture* texture = malloc(sizeof( struct MGE_Texture));
+
+    return texture;
+
+}
+
 
 void MGE_rawModelFree(struct MGE_RawModel* model) {
 

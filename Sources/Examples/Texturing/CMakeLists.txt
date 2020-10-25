@@ -32,58 +32,20 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.             #
 #####################################################################################
 
-#############################################
-#               PROJECT SETUP               #
-#############################################
+set (MODULE_NAME "Example_Texturing-${PROJECT_NAME}")
+set (FOLDER_NAME Texturing)
 
-cmake_minimum_required(VERSION 3.16.3)
-project(Matts_Game_Engine C)
+set (OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/Examples/${MODULE_NAME})
+set (RESOURCE_SRC_DIR ${CMAKE_SOURCE_DIR}/Sources/Examples/${FOLDER_NAME}/Resource/)
+set (RESOURCE_DST_DIR ${OUTPUT_DIR}/Resource/)
 
-set(MGE_VERSION_MAJOR "0")
-set(MGE_VERSION_MINOR "0")
-set(MGE_VERSION_PATCH "0")
-set(MGE_VERSION_TWEAK "1")
-set(MGE_VERSION "${MGE_VERSION_MAJOR}.${MGE_VERSION_MINOR}")
-set(MGE_VERSION_FULL "${MGE_VERSION}.${MGE_VERSION_PATCH}-${MGE_VERSION_TWEAK}")
+add_executable("${MODULE_NAME}" Texturing.c)
+target_link_libraries("${MODULE_NAME}" Matts_Game_Engine)
 
-set(CMAKE_C_STANDARD 99)
+set_target_properties(${MODULE_NAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR}
+        )
 
-set(PATH_TO_ENGINE_SRC Sources/Matt-Engine)
-
-include_directories(${PATH_TO_ENGINE_SRC}/include)
-
-set(OpenGL_GL_PREFERENCE GLVND)
-
-#############################################
-#               Dependencies                #
-#############################################
-
-# OpenGL stuff
-add_subdirectory(Dependencies/GL-Dependencies)
-include_directories(Dependencies/GL-Dependencies/GLFW-3.3/include)
-include_directories(Dependencies/GL-Dependencies/GLAD/include)
-
-# STB_IMAGE
-add_subdirectory(Dependencies/STB)
-include_directories(Dependencies/STB/include)
-
-#############################################
-#           Engine and Examples             #
-#############################################
-add_subdirectory(${PATH_TO_ENGINE_SRC})
-add_subdirectory(Sources/Examples)
-
-#############################################
-#            Doxygen Generation             #
-#############################################
-set(DOXYGEN_GENERATE_HTML YES)
-set(DOXYGEN_CALLER_GRAPH YES)
-set(DOXYGEN_CALL_GRAPH YES)
-set(DOXYGEN_EXTRACT_ALL YES)
-set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Docs")
-set(DOXYGEN_EXCLUDE_PATTERNS ",,*/Docs/*,*/cmake-build-debug/*,*/cmake-build-release/*,*/Dependencies/*")
-set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
-set(DOXYGEN_UML_LOOK YES)
-
-find_package(Doxygen REQUIRED dot)
-doxygen_add_docs(${PROJECT_NAME}-Doxygen "${CMAKE_SOURCE_DIR}")
+add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCE_SRC_DIR} ${RESOURCE_DST_DIR}
+        )
