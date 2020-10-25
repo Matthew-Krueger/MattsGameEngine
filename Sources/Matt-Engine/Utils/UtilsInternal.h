@@ -50,6 +50,10 @@ struct MGE_RawModel{
     struct MGE_VBO vertices, indices;
 };
 
+struct MGE_Texture{
+    GLuint textureID;
+};
+
 
 /**
  * Creates a VBO in graphics memory and returns the id.
