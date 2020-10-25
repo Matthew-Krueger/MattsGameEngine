@@ -33,7 +33,6 @@
 ************************************************************************************/
 
 #include "GraphicsInternal.h"
-#include "GraphicsAPI.h"
 
 #include <stdio.h>
 #include <stdlib.h>
