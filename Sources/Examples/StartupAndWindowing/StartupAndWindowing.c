@@ -67,7 +67,7 @@ int main(int argc, char ** argv){
     vertex4.vector[2] = 0.0f;
     struct MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
 
-    struct MGE_RawModel* model = MGE_loadToVAO(vertices, 4, indices, 6);
+    struct MGE_RawModel* model = MGE_rawModelLoadToVAO(vertices, 4, indices, 6, NULL);
     struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Shaders/RainbowShader.vert.glsl", "Shaders/RainbowShader.frag.glsl", bindAttributes);
 
     while(!MGE_windowShouldClose(window)){

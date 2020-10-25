@@ -35,10 +35,15 @@
 #ifndef MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
 #define MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
 
-struct MGE_Texture;
+// Model stuff
 struct MGE_PositionVector;
+struct MGE_TextureCoordVector;
+struct MGE_RawModel;
+struct MGE_Texture;
+struct MGE_TexturedModel;
+
+
 struct MGE_Window;
 struct MGE_ShaderProgram;
-struct MGE_RawModel;
 
 #endif //MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H

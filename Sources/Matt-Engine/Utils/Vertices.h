@@ -68,4 +68,50 @@ struct MGE_PositionVector{
         };
     };
 };
+
+/**
+ * Represents a Positional Vector (of a vertex)
+ */
+struct MGE_TextureCoordVector{
+
+    /**
+     * Unions a vec3 and x,y,z. Useful so it can be addressed as a 3 component vector or as x y and z components
+     * like in GLSL
+     */
+    union{
+
+        /**
+         * The u,v component.
+         */
+        struct{
+
+            /**
+             * u,v components of the position
+             */
+            float u,v;
+        };
+
+        /**
+         * The u,v component.
+         */
+        struct{
+
+            /**
+             * s,t components of the position
+             */
+            float s,t;
+        };
+
+        /**
+         * The vector component
+         */
+        struct{
+
+            /**
+             * A vector representation of the position
+             */
+            vec2 vector;
+        };
+    };
+};
 #endif //MATTS_GAME_ENGINE_VERTICES_H

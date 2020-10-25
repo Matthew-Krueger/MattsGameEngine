@@ -39,6 +39,7 @@
 #include "Vertices.h"
 
 #define VERTEX_ATTRIB_POSITION_LOCATION 0
+#define VERTEX_ATTRIB_TEXTURE_COORD_LOCATION 1
 
 struct MGE_VBO{
     GLuint vboID;
@@ -47,11 +48,20 @@ struct MGE_VBO{
 struct MGE_RawModel{
     GLuint vaoID;
     GLsizei length;
-    struct MGE_VBO vertices, indices;
+    struct MGE_VBO vertices, indices, textureCoords;
 };
 
 struct MGE_Texture{
     GLuint textureID;
+    char * filePath;
+    int width;
+    int height;
+    int BPP;
+};
+
+struct MGE_TexturedModel{
+    struct MGE_RawModel* rawModel;
+    struct MGE_Texture* baseColorTexture;
 };
 
 
@@ -64,7 +74,7 @@ MGE_API_HIDDEN GLuint MGE_createVAO();
 /**
  * Binds an indices buffer
  * @param indices The array of indices
- * @param ize The size of the array
+ * @param size The size of the array
  * @return A VBO id of the index array
  */
 MGE_API_HIDDEN struct MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
@@ -73,10 +83,13 @@ MGE_API_HIDDEN struct MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr 
  * Stores GL_FLOAT in an attribute list
  * @param attributeNumber The attribute number to store it in
  * @param data The data to write to GPU memory
- * @param size The size of the data to write
+ * @param dataPtrSize The size of the pointer to data (use sizeof(*data))
+ * @param dataLength The size of the data to write
+ * @param coordSize The number of numbers per vertex needed
+ * @param typeOfData The type of data loading (in the event it is a void*, NOT YET IMPLEMENTED)
  * @return A VBO ID of the attribute list
  */
-MGE_API_HIDDEN struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, struct MGE_PositionVector* data, GLsizeiptr size, GLenum typeOfData);
+MGE_API_HIDDEN struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, void* data, size_t dataPtrSize, GLsizeiptr dataLength, GLint coordSize, GLenum typeOfData);
 
 /**
  * Helper to unbind the current VAO

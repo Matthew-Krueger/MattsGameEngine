@@ -33,22 +33,81 @@
 ************************************************************************************/
 
 #include "UtilsInternal.h"
+#include <STB/stb_image.h>
 
-struct MGE_RawModel* MGE_loadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize) {
+struct MGE_RawModel* MGE_rawModelLoadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize, struct MGE_TextureCoordVector* uvCoords) {
     struct MGE_RawModel* result = malloc(sizeof(struct MGE_RawModel));
 
     result->vaoID = MGE_createVAO();
     result->indices = MGE_bindIndicesBuffer(indices, indicesSize);
-    result->vertices = MGE_storeDataInAttributeList(VERTEX_ATTRIB_POSITION_LOCATION, positions, positionsSize, GL_FLOAT);
+    result->vertices = MGE_storeDataInAttributeList(VERTEX_ATTRIB_POSITION_LOCATION, positions, sizeof(*positions), positionsSize, 3, GL_FLOAT);
+    if(uvCoords != NULL)
+        result->textureCoords = MGE_storeDataInAttributeList(VERTEX_ATTRIB_TEXTURE_COORD_LOCATION, uvCoords, sizeof(*uvCoords), positionsSize, 2, GL_FLOAT);
     result->length = indicesSize;
 
     return result;
 }
 
-struct MGE_Texture* MGE_loadTextureFromFile(const char * filePath){
+struct MGE_Texture* MGE_textureLoadFromFile(char * filePath){
     struct MGE_Texture* texture = malloc(sizeof( struct MGE_Texture));
 
+    /* Init the texture */
+    texture->filePath = filePath;
+    unsigned char* localBuffer = NULL;
+    texture->textureID = 0;
+    texture->height = 0;
+    texture->width = 0;
+    texture->BPP = 0;
+
+    /* Generate Texture and bind */
+    glGenTextures(1, &texture->textureID);
+    glBindTexture(GL_TEXTURE_2D, texture->textureID);
+
+    /* Set up STBI and load */
+    stbi_set_flip_vertically_on_load(true);
+    localBuffer = stbi_load(filePath, &texture->width, &texture->height, &texture->BPP,4);
+
+    if(localBuffer == NULL){
+        char buf[256];
+        sprintf(buf, "Unable to load Image File: %s", filePath);
+        MGE_CORE_LOG_SEVERE(buf, stbi_failure_reason());
+        return texture;
+    }
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texture->width, texture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    stbi_image_free(localBuffer);
+
+
     return texture;
+
+}
+
+void MGE_textureBind(struct MGE_Texture* texture, GLenum slot){
+
+    glActiveTexture(slot);
+    glBindTexture(GL_TEXTURE_2D, texture->textureID);
+
+}
+
+void MGE_textureUnbind(struct MGE_Texture* texture){
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+}
+
+void MGE_textureFree(struct MGE_Texture* texture){
+
+    glDeleteTextures(1, &texture->textureID);
+
+    free(texture);
 
 }
 
@@ -63,6 +122,23 @@ void MGE_rawModelFree(struct MGE_RawModel* model) {
     glDeleteBuffers(1,&model->vertices.vboID);
 
     free(model);
+
+}
+
+struct MGE_TexturedModel* MGE_texturedModelCreate(struct MGE_RawModel* rawModel, struct MGE_Texture* baseColorTexture){
+
+    struct MGE_TexturedModel* result = malloc(sizeof(struct MGE_TexturedModel));
+
+    result->rawModel = rawModel;
+    result->baseColorTexture = baseColorTexture;
+
+    return result;
+
+}
+
+void MGE_texturedModelFree(struct MGE_TexturedModel* texturedModel){
+
+    free(texturedModel);
 
 }
 
@@ -85,7 +161,7 @@ struct MGE_VBO MGE_bindIndicesBuffer(GLuint *indices, GLsizeiptr size) {
 
 }
 
-struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, struct MGE_PositionVector* data, GLsizeiptr size, GLenum typeOfData) {
+struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, void* data, size_t dataPtrSize, GLsizeiptr dataLength, GLint coordSize, GLenum typeOfData) {
 
     struct MGE_VBO vbo;
     glGenBuffers(1, &vbo.vboID);
@@ -93,12 +169,10 @@ struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, struct MGE_P
     glBindBuffer(GL_ARRAY_BUFFER, vbo.vboID);
 
     char buf2[5];
-    sprintf(buf2, "%ld", size);
+    sprintf(buf2, "%ld", dataLength);
 
-    void* rawData = (void*) data;
-
-    glBufferData(GL_ARRAY_BUFFER, size*sizeof(struct MGE_PositionVector), rawData, GL_STATIC_DRAW);
-    glVertexAttribPointer(attributeNumber, 3, typeOfData, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER, dataLength*dataPtrSize, data, GL_STATIC_DRAW);
+    glVertexAttribPointer(attributeNumber, coordSize, typeOfData, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(attributeNumber);
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
 

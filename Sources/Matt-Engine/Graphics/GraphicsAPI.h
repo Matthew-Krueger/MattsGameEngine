@@ -79,6 +79,8 @@ MGE_API void MGE_prepareFrame();
  */
 MGE_API void MGE_renderRawModel(struct MGE_RawModel* model);
 
+MGE_API void MGE_renderTexturedModel(struct MGE_TexturedModel* model);
+
 /**
  *
  * Loads a shader into GPU memory from the disk.

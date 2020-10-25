@@ -36,7 +36,7 @@
 #include <Matts-Engine/Core.h>
 #include <stdlib.h>
 
-void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel* rawModel, struct MGE_ShaderProgram* shader);
+void runRenderLoop(struct MGE_Window* window, struct MGE_TexturedModel* model, struct MGE_ShaderProgram* shader);
 void bindAttributes(struct MGE_ShaderProgram* program);
 
 int main(int argc, char ** argv){
@@ -65,10 +65,15 @@ int main(int argc, char ** argv){
     vertex4.vector[0] = .5f;
     vertex4.vector[1] = .5f;
     vertex4.vector[2] = 0.0f;
-    struct MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
+    struct MGE_PositionVector verticesPositions[4] = {vertex1, vertex2, vertex3, vertex4};
+    struct MGE_TextureCoordVector verticesTextureCoords[4] = {{0,0},{0,1},{1,1},{1,0}};
 
-    struct MGE_RawModel* model = MGE_loadToVAO(vertices, 4, indices, 6);
-    struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Resource/Shaders/RainbowShader.vert.glsl", "Resource/Shaders/RainbowShader.frag.glsl", bindAttributes);
+    struct MGE_RawModel* model = MGE_rawModelLoadToVAO(verticesPositions, 4, indices, 6, verticesTextureCoords);
+    struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Resource/Shaders/TextureShader.vert.glsl", "Resource/Shaders/TextureShader.frag.glsl", bindAttributes);
+
+    struct MGE_Texture* texture = MGE_textureLoadFromFile("Resource/Textures/Grass_BaseColor.jpg");
+
+    struct MGE_TexturedModel* texturedModel = MGE_texturedModelCreate(model, texture);
 
     while(!MGE_windowShouldClose(window)){
 
@@ -76,13 +81,15 @@ int main(int argc, char ** argv){
         if(MGE_isKeyDown(window, MGE_KEY_ESCAPE))
             MGE_windowSetShouldClose(window);
 
-        runRenderLoop(window, model, shader);
+        runRenderLoop(window, texturedModel, shader);
 
         MGE_windowUpdate(window);
 
     }
 
     MGE_rawModelFree(model);
+    MGE_textureFree(texture);
+    MGE_texturedModelFree(texturedModel);
     MGE_shaderProgramFree(shader);
     MGE_windowDelete(window);
 
@@ -90,16 +97,17 @@ int main(int argc, char ** argv){
 
 void bindAttributes(struct MGE_ShaderProgram* program){
 
-    MGE_APP_INFO("Binding Attributes", "Binding Attributes of shader");
+    // MGE_APP_INFO("Binding Attributes", "Binding Attributes of shader");
     MGE_shaderBindAttribute(program, 0, "position");
+    MGE_shaderBindAttribute(program, 1, "textureCoords");
 
 }
 
-void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel* model, struct MGE_ShaderProgram* shader){
+void runRenderLoop(struct MGE_Window* window, struct MGE_TexturedModel* model, struct MGE_ShaderProgram* shader){
 
     MGE_prepareFrame();
     MGE_shaderStart(shader);
-    MGE_renderRawModel(model);
+    MGE_renderTexturedModel(model);
     MGE_shaderStop();
 
 }

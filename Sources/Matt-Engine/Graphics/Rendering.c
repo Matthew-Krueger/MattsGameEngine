@@ -48,3 +48,15 @@ void MGE_renderRawModel(struct MGE_RawModel* model) {
     glBindVertexArray(0);
 
 }
+
+void MGE_renderTexturedModel(struct MGE_TexturedModel* model){
+
+    struct MGE_RawModel* rawModel = model->rawModel;
+    struct MGE_Texture* baseColorTexture = model->baseColorTexture;
+
+    glBindVertexArray(rawModel->vaoID);
+    MGE_textureBind(baseColorTexture, GL_TEXTURE0);
+    glDrawElements(GL_TRIANGLES, rawModel->length, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+}
