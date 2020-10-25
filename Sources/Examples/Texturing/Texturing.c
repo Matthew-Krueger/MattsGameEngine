@@ -47,19 +47,32 @@ int main(int argc, char ** argv){
 
     struct MGE_Window* window = MGE_windowInit(1920, 1080, "StartupAndWindowing");
 
-    GLuint indices[] = {
-            0,1,3,
-            3,1,2
-    };
-    struct MGE_PositionVector verticesPositions[4] = {{-.5f,.5f,0.0f}, {-.5f,-.5f,0.0f}, {0.5f,-0.5f,0.0f}, {.5f,.5f,0.0f}};
-    struct MGE_TextureCoordVector verticesTextureCoords[4] = {{0,0},{0,1},{1,1},{1,0}};
+    MGE_variableLengthArrayLargeHint(15);
+    struct MGE_VariableLengthArray* vlaTextures = MGE_variableLengthArrayCreate();
+    struct MGE_VariableLengthArray* vlaRawModels = MGE_variableLengthArrayCreate();
+    struct MGE_TexturedModel* texturedModel = NULL;
+    {
+        GLuint indices[] = {
+                0, 1, 3,
+                3, 1, 2
+        };
+        struct MGE_PositionVector verticesPositions[4] = {{-.5f, .5f,   0.0f},
+                                                          {-.5f, -.5f,  0.0f},
+                                                          {0.5f, -0.5f, 0.0f},
+                                                          {.5f,  .5f,   0.0f}};
+        struct MGE_TextureCoordVector verticesTextureCoords[4] = {{0, 0},
+                                                                  {0, 1},
+                                                                  {1, 1},
+                                                                  {1, 0}};
 
-    struct MGE_RawModel* model = MGE_rawModelLoadToVAO(verticesPositions, 4, indices, 6, verticesTextureCoords);
+        struct MGE_RawModel* model = MGE_rawModelLoadToVAO(verticesPositions, 4, indices, 6, verticesTextureCoords);
+        struct MGE_Texture* texture = MGE_textureLoadFromFile("Resource/Textures/Grass_BaseColor.jpg");
+        texturedModel = MGE_texturedModelCreate(model, texture);
+        MGE_variableLengthArrayPush(vlaTextures, texture);
+        MGE_variableLengthArrayPush(vlaRawModels, model);
+
+    }
     struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Resource/Shaders/TextureShader.vert.glsl", "Resource/Shaders/TextureShader.frag.glsl", bindAttributes);
-
-    struct MGE_Texture* texture = MGE_textureLoadFromFile("Resource/Textures/Grass_BaseColor.jpg");
-
-    struct MGE_TexturedModel* texturedModel = MGE_texturedModelCreate(model, texture);
 
     while(!MGE_windowShouldClose(window)){
 
@@ -73,9 +86,9 @@ int main(int argc, char ** argv){
 
     }
 
-    MGE_rawModelFree(model);
-    MGE_textureFree(texture);
     MGE_texturedModelFree(texturedModel);
+    MGE_variableLengthArrayFreeRawModel(vlaRawModels);
+    MGE_variableLengthArrayFreeTexture(vlaTextures);
     MGE_shaderProgramFree(shader);
     MGE_windowDelete(window);
 

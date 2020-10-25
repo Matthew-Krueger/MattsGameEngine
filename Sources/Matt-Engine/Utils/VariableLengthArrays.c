@@ -34,13 +34,29 @@
 
 #include "UtilsInternal.h"
 
+static size_t MGE_VLA_LARGE_HINT = 0;
+
+void MGE_variableLengthArrayLargeHint(size_t sizeHint){
+
+    MGE_VLA_LARGE_HINT = sizeHint;
+
+}
+
 struct MGE_VariableLengthArray* MGE_variableLengthArrayCreate(){
 
     struct MGE_VariableLengthArray* result = malloc(sizeof(struct MGE_VariableLengthArray));
 
     result->length = 0;
-    result->bufLen = 1;
-    result->buffer = malloc(sizeof(void**)*1);
+
+    if(MGE_VLA_LARGE_HINT >= MGE_VLA_LARGE_THRESHOLD){
+        result->bufLen = MGE_VLA_LARGE_HINT;
+        result->buffer = malloc(sizeof(void**)* MGE_VLA_LARGE_HINT);
+    }else{
+        result->bufLen = 1;
+        result->buffer = malloc(sizeof(void **) * 1);
+    }
+
+    MGE_VLA_LARGE_HINT = 0;
 
     return result;
 
@@ -52,7 +68,7 @@ void MGE_variableLengthArrayPush(struct MGE_VariableLengthArray* array, void* va
     ++newSize;
 
     if(newSize>array->bufLen){
-        size_t newBufLen = array->bufLen * VLA_GROTH_FACTOR + 1;
+        size_t newBufLen = array->bufLen * MGE_VLA_GROTH_FACTOR + 1;
         array->buffer = realloc(array->buffer, newBufLen*sizeof(void*));
         array->bufLen = newBufLen;
     }
@@ -63,6 +79,10 @@ void MGE_variableLengthArrayPush(struct MGE_VariableLengthArray* array, void* va
 }
 
 void* MGE_variableLengthArrayPop(struct MGE_VariableLengthArray* array){
+
+    if(array->length == 0){
+        return NULL;
+    }
 
     void* result = array->buffer[array->length-1];
     --array->length;
@@ -81,5 +101,31 @@ void MGE_variableLengthArrayFree(struct MGE_VariableLengthArray* array){
 
     free(array->buffer);
     free(array);
+
+}
+
+void MGE_variableLengthArrayFreeRawModel(struct MGE_VariableLengthArray* array){
+    struct MGE_RawModel* rawModel;
+    rawModel = MGE_variableLengthArrayPop(array);
+    while(rawModel != NULL){
+        MGE_rawModelFree(rawModel);
+        rawModel = MGE_variableLengthArrayPop(array);
+    }
+
+    MGE_variableLengthArrayFree(array);
+
+}
+
+
+void MGE_variableLengthArrayFreeTexture(struct MGE_VariableLengthArray* array){
+
+    struct MGE_Texture* texture;
+    texture = MGE_variableLengthArrayPop(array);
+    while(texture != NULL){
+        MGE_textureFree(texture);
+        texture = MGE_variableLengthArrayPop(array);
+    }
+
+    MGE_variableLengthArrayFree(array);
 
 }

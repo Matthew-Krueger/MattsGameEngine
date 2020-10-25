@@ -271,8 +271,20 @@ MGE_API void MGE_windowDefaultSizeCallback(GLFWwindow* window, int width, int he
 MGE_API void MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
 
 /**
+ * \note Sets a size hint to the variable length constructor to preallocate more memory.
+ * This function should be called before \link MGE_variableLengthArrayCreate MGE_variableLengthArrayCreate \endlink
+ * if you expect to be putting a large amount of things into the VLA. This will give the engine a hint
+ * as to how it should handle the allocation of memory.
+ * @param sizeHint The expected size of the VLA.
+ */
+MGE_API void MGE_variableLengthArrayLargeHint(size_t sizeHint);
+
+/**
  * \brief Creates a variable length array to add objects to.
  * \note This array does not have a data type. It will not keep track of that for you.
+ *
+ * If you expect a large amount of data to be stored, call \link MGE_variableLengthArrayLargeHint MGE_variableLengthArrayLargeHint \endlink
+ * before you call this function. This will hint that the array should be pre-allocated larger than the standard 1.
  * @return The array newly created
  */
 MGE_API struct MGE_VariableLengthArray* MGE_variableLengthArrayCreate();
@@ -306,5 +318,21 @@ MGE_API void * MGE_variableLengthArrayPeek(struct MGE_VariableLengthArray* array
  * @param array The array to free
  */
 MGE_API void MGE_variableLengthArrayFree(struct MGE_VariableLengthArray* array);
+
+/**
+ * \brief Utility function for freeing all \link MGE_RawModel MGE_RawModel \link in a MGE_variableLengthArray
+ * \note This function invokes \link MGE_variableLengthArrayFree MGE_variableLengthArrayFree \endlink
+ * \note so an additional call to free the VLA is not required.
+ * @param array The variable length array to free contents
+ */
+MGE_API void MGE_variableLengthArrayFreeRawModel(struct MGE_VariableLengthArray* array);
+
+/**
+ * \brief Utility function for freeing all \link MGE_Texture MGE_Texture \endlink in a MGE_variableLengthArray
+ * \note This function invokes \link MGE_variableLengthArrayFree MGE_variableLengthArrayFree \endlink
+ * \note so an additional call to free the VLA is not required.
+ * @param array The variable length array to free contents
+ */
+MGE_API void MGE_variableLengthArrayFreeTexture(struct MGE_VariableLengthArray* array);
 
 #endif //MATTS_GAME_ENGINE_UTILSAPI_H

@@ -41,7 +41,15 @@
 #define VERTEX_ATTRIB_POSITION_LOCATION 0
 #define VERTEX_ATTRIB_TEXTURE_COORD_LOCATION 1
 
-#define VLA_GROTH_FACTOR 1.5
+/**
+ * Defines the factor by which realloc allocates new memory for a \link MGE_VariableLengthArray MGE_VariableLengthArray \endlink
+ */
+#define MGE_VLA_GROTH_FACTOR 1.5
+
+/**
+ * Defines the threshold to follow the \link MGE_VLA_LARGE_HINT MGE_VLA_LARGE_HINT \endlink
+ */
+#define MGE_VLA_LARGE_THRESHOLD 1
 
 struct MGE_VBO{
     GLuint vboID;
