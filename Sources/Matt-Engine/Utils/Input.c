@@ -32,9 +32,10 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "Input.h"
+#include "UtilsInternal.h"
+#include "../Graphics/GraphicsInternal.h"
 
-bool MGE_isKeyDown(MGE_Window* window, int keyNumber) {
+bool MGE_isKeyDown(struct MGE_Window* window, int keyNumber) {
     if(glfwGetKey(window->window, keyNumber) == GLFW_PRESS){
         return true;
     }

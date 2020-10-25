@@ -32,7 +32,8 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "Rendering.h"
+#include "GraphicsAPI.h"
+#include "../Utils/UtilsInternal.h"
 
 
 void MGE_prepareFrame() {
@@ -40,10 +41,10 @@ void MGE_prepareFrame() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 }
 
-void MGE_renderRawModel(MGE_RawModel model) {
+void MGE_renderRawModel(struct MGE_RawModel* model) {
 
-    glBindVertexArray(model.vaoID);
-    glDrawElements(GL_TRIANGLES, model.length, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(model->vaoID);
+    glDrawElements(GL_TRIANGLES, model->length, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
 }

@@ -32,18 +32,49 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_RENDERING_H
-#define MATTS_GAME_ENGINE_RENDERING_H
+#ifndef MATTS_GAME_ENGINE_GRAPHICSINTERNAL_H
+#define MATTS_GAME_ENGINE_GRAPHICSINTERNAL_H
+
+#include "GraphicsAPI.h"
 
 /**
- * Prepares the frame for rendering by clearing the color buffer bit and setting a default color
+ * A representation of the window (wrapped for ease)
  */
-MGE_API void MGE_prepareFrame();
+struct MGE_Window{
+
+    GLFWwindow* window;
+
+};
+
+struct MGE_ShaderSource{
+    char * shaderSource;
+    size_t length;
+};
+
+struct MGE_ShaderProgram{
+
+    GLuint vertexShaderID;
+    GLuint fragmentShaderID;
+    GLuint programID;
+    struct MGE_ShaderSource vertexShaderSource;
+    struct MGE_ShaderSource fragmentShaderSource;
+
+
+} ;
 
 /**
- * Renders a raw model to the display
- * @param model The model to render
+ * Loads a shader source to memory
+ * @param filePath The path to the file to read.
+ * @return The shader source string
  */
-MGE_API void MGE_renderRawModel(MGE_RawModel model);
+MGE_API_HIDDEN void MGE_shaderRead(const char * filePath, char** dataptr, size_t* sizeptr);
 
-#endif //MATTS_GAME_ENGINE_RENDERING_H
+/**
+ * Loads a shader to the GPU memory from source
+ * @param source The source code of the shader
+ * @param type The type of shader to load
+ * @return The Shader ID from OpenGL.
+ */
+MGE_API_HIDDEN GLuint MGE_shaderLoad(const char * source, GLenum type);
+
+#endif //MATTS_GAME_ENGINE_GRAPHICSINTERNAL_H

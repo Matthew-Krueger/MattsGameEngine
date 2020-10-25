@@ -32,83 +32,27 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_SHADERMANAGEMENT_H
-#define MATTS_GAME_ENGINE_SHADERMANAGEMENT_H
-
-typedef struct {
-    char * shaderSource;
-    size_t length;
-} MGE_ShaderSource;
-
-typedef struct{
-
-    GLuint vertexShaderID;
-    GLuint fragmentShaderID;
-    GLuint programID;
-    MGE_ShaderSource vertexShaderSource;
-    MGE_ShaderSource fragmentShaderSource;
-
-
-} MGE_ShaderProgram;
+#ifndef MATTS_GAME_ENGINE_SHAREDLOGSTRUCTS_H
+#define MATTS_GAME_ENGINE_SHAREDLOGSTRUCTS_H
 
 /**
- *
- * Loads a shader into GPU memory from the disk.
- * @param vertexShaderPath The path to the Vertex Shader source
- * @param fragmentShaderPath The path to the Fragment Shader source
- * @return The Shader Program
- * @param bindAttributes The lambda to bind attributes in the program
- * @return
+ * The Log Levels of the logger. Calling MGE_*_LOG_CRITICAL will cause a crash.
  */
-MGE_API MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char* vertexShaderPath, const char* fragmentShaderPath, void (*bindAttributes)(MGE_ShaderProgram*));
-
-/**
- * Loads a shader into GPU memory from CPU memory
- * @param vertexSource The Vertex Shader source to attach
- * @param fragmentSource The Fragment Shader source to attach
- * @return The shader program
- */
-MGE_API MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(MGE_ShaderProgram* target);
-
-/**
- * Tell OpenGL to use a Shader Program
- * @param shaderProgram The Shader Program to use
- */
-MGE_API void MGE_shaderStart(MGE_ShaderProgram* shaderProgram);
-
-/**
- * Tell OpenGL to no longer use a shader
- */
-MGE_API void MGE_shaderStop();
+typedef enum{
+    TRACE,
+    INFO,
+    FINE,
+    WARN,
+    SEVERE,
+    CRITICAL
+} MGE_LogLevel;
 
 
 /**
- * Frees a shader program and deletes everything from memory
- * @param shaderProgram The shader program to delete
+ * Initializes the files that the logging functions will log to. Currently unused
+ * @param mge_engineLogFile The file to log engine errors to
+ * @param mge_appLogFile The file to log app errors to
  */
-MGE_API void MGE_freeShaderProgram(MGE_ShaderProgram* shaderProgram);
+MGE_API void MGE_logInit(const char * mge_engineLogFile, const char * mge_appLogFile);
 
-/**
- * Binds an attribute to a part of the shader
- * @param shaderProgram The shader program to bind to.
- * @param attribute The attribute number to bind.
- * @param variableName The variable name to bind the attribute to.
- */
-MGE_API void MGE_shaderBindAttribute(MGE_ShaderProgram* shaderProgram, GLuint attribute, const char* variableName);
-
-/**
- * Loads a shader source to memory
- * @param filePath The path to the file to read.
- * @return The shader source string
- */
-MGE_API_HIDDEN void MGE_shaderRead(const char * filePath, char** dataptr, size_t* sizeptr);
-
-/**
- * Loads a shader to the GPU memory from source
- * @param source The source code of the shader
- * @param type The type of shader to load
- * @return The Shader ID from OpenGL.
- */
-MGE_API_HIDDEN GLuint MGE_shaderLoad(const char * source, GLenum type);
-
-#endif //MATTS_GAME_ENGINE_SHADERMANAGEMENT_H
+#endif //MATTS_GAME_ENGINE_SHAREDLOGSTRUCTS_H

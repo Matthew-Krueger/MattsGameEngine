@@ -34,11 +34,10 @@
 
 #ifndef MATTS_GAME_ENGINE_VERTICES_H
 #define MATTS_GAME_ENGINE_VERTICES_H
-
 /**
  * Represents a Positional Vector (of a vertex)
  */
-typedef struct{
+struct MGE_PositionVector{
 
     /**
      * Unions a vec3 and x,y,z. Useful so it can be addressed as a 3 component vector or as x y and z components
@@ -68,6 +67,5 @@ typedef struct{
             vec3 vector;
         };
     };
-} MGE_PositionVector;
-
+};
 #endif //MATTS_GAME_ENGINE_VERTICES_H

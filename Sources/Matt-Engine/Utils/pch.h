@@ -40,15 +40,10 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#include "../SharedDeclarations.h"
+#include <stdbool.h>
 #include "linmath.h"
-#include "../Graphics/Vertices.h"
-#include "Loader.h"
 
-
-#include "Callbacks.h"
-#include "../Graphics/Displays.h"
-#include "../Graphics/Rendering.h"
+#include "UsefulMacros.h"
+#include "../Logging/EngineLogger.h"
 
 #endif //MATTS_GAME_ENGINE_PCH_H

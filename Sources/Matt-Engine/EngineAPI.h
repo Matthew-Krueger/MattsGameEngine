@@ -32,4 +32,16 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#include "Vertices.h"
+#ifndef MATTS_GAME_ENGINE_ENGINEAPI_H
+#define MATTS_GAME_ENGINE_ENGINEAPI_H
+
+#include <GLFW/glfw3.h>
+#include <stdbool.h>
+
+#include "Logging/AppLogger.h"
+
+#include "EngineForwardDecls.h"
+#include "Utils/UtilsAPI.h"
+#include "Graphics/GraphicsAPI.h"
+
+#endif //MATTS_GAME_ENGINE_ENGINEAPI_H

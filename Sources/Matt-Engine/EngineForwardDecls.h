@@ -32,33 +32,12 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_CALLBACKS_H
-#define MATTS_GAME_ENGINE_CALLBACKS_H
+#ifndef MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
+#define MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H
 
-#include "../Graphics/Displays.h"
+struct MGE_PositionVector;
+struct MGE_Window;
+struct MGE_ShaderProgram;
+struct MGE_RawModel;
 
-MGE_API void MGE_setWindowResizeCallback(MGE_Window *window, void (*windowResizeCallback)(GLFWwindow*window, int width, int height));
-MGE_API void MGE_setDebugMessageCallback(void (*errorCallback)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam));
-
-
-/**
- * The Callback for a window size change
- * @param window OpenGL Provided Value
- * @param width OpenGL Provided Value
- * @param height OpenGL Provided Value
- */
-void MGE_framebufferSizeCallback(GLFWwindow* window, int width, int height);
-
-/**
- * Provides a callback for OpenGL errors, and uses severe error log
- * @param source OpenGL Provided Value
- * @param type OpenGL Provided Value
- * @param id OpenGL Provided Value
- * @param severity OpenGL Provided Value
- * @param length OpenGL Provided Value
- * @param message OpenGL Provided Value
- * @param userParam OpenGL Provided Value
- */
-MGE_API void MGE_debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
-
-#endif //MATTS_GAME_ENGINE_CALLBACKS_H
+#endif //MATTS_GAME_ENGINE_ENGINEFORWARDDECLS_H

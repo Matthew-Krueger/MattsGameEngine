@@ -32,36 +32,24 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_LOADER_H
-#define MATTS_GAME_ENGINE_LOADER_H
+#ifndef MATTS_GAME_ENGINE_UTILSINTERNAL_H
+#define MATTS_GAME_ENGINE_UTILSINTERNAL_H
+
+#include "UtilsAPI.h"
+#include "Vertices.h"
 
 #define VERTEX_ATTRIB_POSITION_LOCATION 0
 
-typedef struct{
+struct MGE_VBO{
     GLuint vboID;
-} MGE_VBO;
+};
 
-typedef struct{
+struct MGE_RawModel{
     GLuint vaoID;
     GLsizei length;
-    MGE_VBO vertices, indices;
-} MGE_RawModel;
+    struct MGE_VBO vertices, indices;
+};
 
-/**
- * Load positions to the GPU
- * @param \link MGE_PositionVector MGE_PositionVector \endlink positions The array of positions vectors.
- * @param GLsizeiptr positionsSize The size of the positions (number of vertices, not number of floats).
- * @param indices GLuint the array of indices that represent the model.
- * @param indicesSize GLsizeiptr the size of the indices array.
- * @return \link MGE_RawModel MGE_RawModel \endlink A constructed RawModel
- */
-MGE_API MGE_RawModel MGE_loadToVAO(MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize);
-
-/**
- * Unload from the Graphics Memory the Raw Model
- * @param model
- */
-MGE_API void MGE_unloadFromVAO(MGE_RawModel model);
 
 /**
  * Creates a VBO in graphics memory and returns the id.
@@ -75,7 +63,7 @@ MGE_API_HIDDEN GLuint MGE_createVAO();
  * @param ize The size of the array
  * @return A VBO id of the index array
  */
-MGE_API_HIDDEN MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
+MGE_API_HIDDEN struct MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
 
 /**
  * Stores GL_FLOAT in an attribute list
@@ -84,12 +72,11 @@ MGE_API_HIDDEN MGE_VBO MGE_bindIndicesBuffer(GLuint* indices, GLsizeiptr size);
  * @param size The size of the data to write
  * @return A VBO ID of the attribute list
  */
-MGE_API_HIDDEN MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, MGE_PositionVector* data, GLsizeiptr size, GLenum typeOfData);
+MGE_API_HIDDEN struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, struct MGE_PositionVector* data, GLsizeiptr size, GLenum typeOfData);
 
 /**
  * Helper to unbind the current VAO
  */
 MGE_API_HIDDEN void MGE_unbindVAO();
 
-
-#endif //MATTS_GAME_ENGINE_LOADER_H
+#endif //MATTS_GAME_ENGINE_UTILSINTERNAL_H
