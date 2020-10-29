@@ -38,6 +38,8 @@
 
 void runRenderLoop(struct MGE_Window* window, struct MGE_RawModel* rawModel, struct MGE_ShaderProgram* shader);
 void bindAttributes(struct MGE_ShaderProgram* program);
+void getUniforms(struct MGE_ShaderProgram* program);
+
 
 int main(int argc, char ** argv){
 
@@ -68,7 +70,7 @@ int main(int argc, char ** argv){
     struct MGE_PositionVector vertices[4] = {vertex1, vertex2, vertex3, vertex4};
 
     struct MGE_RawModel* model = MGE_rawModelLoadToVAO(vertices, 4, indices, 6, NULL);
-    struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Shaders/RainbowShader.vert.glsl", "Shaders/RainbowShader.frag.glsl", bindAttributes);
+    struct MGE_ShaderProgram* shader = MGE_shaderLoadProgramFromFiles("Shaders/RainbowShader.vert.glsl", "Shaders/RainbowShader.frag.glsl", bindAttributes, getUniforms);
 
     while(!MGE_windowShouldClose(window)){
 
@@ -92,6 +94,10 @@ void bindAttributes(struct MGE_ShaderProgram* program){
 
     MGE_APP_INFO("Binding Attributes", "Binding Attributes of shader");
     MGE_shaderBindAttribute(program, 0, "position");
+
+}
+
+void getUniforms(struct MGE_ShaderProgram* program){
 
 }
 

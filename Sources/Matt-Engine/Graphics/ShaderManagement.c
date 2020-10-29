@@ -41,7 +41,6 @@
 #define  READALL_CHUNK  262144
 #endif
 
-
 struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char *vertexShaderPath, const char *fragmentShaderPath, void (*bindAttributes)(struct MGE_ShaderProgram*), void (*getAllUniformLocations)(struct MGE_ShaderProgram*)) {
 
     struct MGE_ShaderProgram* result = malloc(sizeof(struct MGE_ShaderProgram));
@@ -50,6 +49,8 @@ struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char *vertexShade
     MGE_shaderRead(fragmentShaderPath, &result->fragmentShaderSource.shaderSource, &result->fragmentShaderSource.length);
 
     MGE_shaderCompileFromTargetProgram(result, bindAttributes);
+    result->uniforms=malloc(sizeof(GLint));
+    result->uniformsSize=1;
 
     getAllUniformLocations(result);
 
@@ -97,28 +98,54 @@ struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderPr
 
 }
 
-GLint MGE_shaderGetUniformLocation(struct MGE_ShaderProgram* target, const char * uniformName){
+void MGE_shaderStoreUniformLocation(struct MGE_ShaderProgram* target, const char * uniformName, size_t index){
 
-    return glGetUniformLocation(target->programID, uniformName);
+    if(target->uniformsSize < index){
+        /* reallocate uniforms */
+        target->uniformsSize += (index-target->uniformsSize) + 1;
+        target->uniforms = realloc(target->uniforms, target->uniformsSize);
+    }
 
-}
-
-void MGE_shaderLoadFloat(GLint location, GLfloat value){
-
-    glUniform1f(location, value);
-
-}
-
-void MGE_shaderLoadVec3(GLint location, vec3 vector){
-
-    glUniform3fv(location, 3, vector);
+    target->uniforms[index] = glGetUniformLocation(target->programID, uniformName);
 
 }
 
-void MGE_shaderLoadBol(GLint location, bool value){
 
-    glUniform1i(location, value);
+void MGE_shaderLoadFloat(struct MGE_ShaderProgram* target, size_t index, GLfloat value){
 
+    glUniform1f(target->uniforms[index], value);
+
+}
+
+void MGE_shaderLoadVec3(struct MGE_ShaderProgram* target, size_t index, vec3 vector){
+
+    glUniform3fv(target->uniforms[index], 3, vector);
+
+}
+
+void MGE_shaderLoadBol(struct MGE_ShaderProgram* target, size_t index,  bool value){
+
+    glUniform1i(target->uniforms[index], value);
+
+}
+
+void MGE_shaderLoadMat4x4f(struct MGE_ShaderProgram* target, size_t index, mat4x4 matrixToLoad){
+
+    GLfloat toLoad[16];
+    for(int i=0; i<16; ++i){
+        toLoad[i] = matrixToLoad[i/4][i%4];
+    }
+    glUniformMatrix4fv(target->uniforms[index], 1, GL_TRUE, (GLfloat*)toLoad);
+
+}
+
+void MGE_createTransformationMatrix(mat4x4 matrix, vec3 transformation, vec3 rotation, vec3 scale){
+    mat4x4_identity(matrix);
+    mat4x4_translate(matrix, transformation[0], transformation[1], transformation[2]);
+    mat4x4_rotate_X(matrix,matrix,rotation[0]);
+    mat4x4_rotate_Y(matrix,matrix,rotation[1]);
+    mat4x4_rotate_Z(matrix,matrix,rotation[2]);
+    mat4x4_scale_aniso(matrix,matrix,scale[0],scale[1],scale[2]);
 }
 
 void MGE_shaderProgramFree(struct MGE_ShaderProgram* shaderProgram) {
@@ -131,6 +158,8 @@ void MGE_shaderProgramFree(struct MGE_ShaderProgram* shaderProgram) {
     free(shaderProgram->vertexShaderSource.shaderSource);
     free(shaderProgram->fragmentShaderSource.shaderSource);
     glDeleteProgram(shaderProgram->programID);
+
+    free(shaderProgram->uniforms);
 
     free(shaderProgram);
 

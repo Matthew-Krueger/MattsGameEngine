@@ -114,4 +114,75 @@ struct MGE_TextureCoordVector{
         };
     };
 };
+
+/**
+ * Represents a Positional Vector (of a vertex)
+ */
+struct MGE_RotationVector{
+
+    /**
+     * Unions a vec3 and x,y,z. Useful so it can be addressed as a 3 component vector or as x y and z components
+     * like in GLSL
+     */
+    union{
+
+        /**
+         * The rx,ry,rz component.
+         */
+        struct{
+
+            /**
+             * x,y,z components of the rotation
+             */
+            float rx,ry,rz;
+        };
+
+        /**
+         * The vector component
+         */
+        struct{
+
+            /**
+             * A vector representation of the rotation
+             */
+            vec3 vector;
+        };
+    };
+};
+
+/**
+ * Represents a Positional Vector (of a vertex)
+ */
+struct MGE_ScaleVector{
+
+    /**
+     * Unions a vec3 and x,y,z. Useful so it can be addressed as a 3 component vector or as x y and z components
+     * like in GLSL
+     */
+    union{
+
+        /**
+         * The sx,sy,sz component.
+         */
+        struct{
+
+            /**
+             * sx,sy,sz components of the scale
+             */
+            float sx,sy,sz;
+        };
+
+        /**
+         * The vector component
+         */
+        struct{
+
+            /**
+             * A vector representation of the scale
+             */
+            vec3 scale;
+        };
+    };
+};
+
 #endif //MATTS_GAME_ENGINE_VERTICES_H

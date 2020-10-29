@@ -104,37 +104,59 @@ MGE_API struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_
  * Gets the location of a uniform variable
  * @param target The shader to bind a uniform variable to
  * @param uniformName The name of the uniform variable
- * @return The uniform value.
+ * @param index specifies the index to store the uniform variable at within the ShaderProgram
  */
-MGE_API GLint MGE_shaderGetUniformLocation(struct MGE_ShaderProgram* target, const char * uniformName);
+MGE_API void MGE_shaderStoreUniformLocation(struct MGE_ShaderProgram* target, const char * uniformName, size_t index);
 
 /**
  * Load a float to a shader uniform
- * @param location The location to load the float to
+ * @param target The shader program to upload to
+ * @param index The index of the uniform variable, set with \link MGE_shaderStoreUniformLocation MGE_shaderStoreUniformLocation \endlink
  * @param value The value to load
  */
-MGE_API void MGE_shaderLoadFloat(GLint location, GLfloat value);
+MGE_API void MGE_shaderLoadFloat(struct MGE_ShaderProgram* target, size_t index, GLfloat value);
 
 /**
- * Load a vec3 to the shader uniform
- * @param location The location to load it to
+ * Load a vec3 to a shader uniform
+ * @param target The shader program to upload to
+ * @param index The index of the uniform variable, set with \link MGE_shaderStoreUniformLocation MGE_shaderStoreUniformLocation \endlink
  * @param vector The vector to load
  */
-MGE_API void MGE_shaderLoadVec3(GLint location, vec3 vector);
+MGE_API void MGE_shaderLoadVec3(struct MGE_ShaderProgram* target, size_t index, vec3 vector);
 
 /**
- * Loads a bool to a shader
- * @param location The location to load it to
+ * Load a bool to a shader uniform
+ * @param target The shader program to upload to
+ * @param index The index of the uniform variable, set with \link MGE_shaderStoreUniformLocation MGE_shaderStoreUniformLocation \endlink
  * @param value The value to load
  */
-MGE_API void MGE_shaderLoadBol(GLint location, bool value);
+MGE_API void MGE_shaderLoadBool(struct MGE_ShaderProgram* target, size_t index, bool value);
 
 /**
- * Does a location 
- * @param location
+ * Load a mat4x4f to a shader uniform
+ * @param target The shader program to upload to
+ * @param index The index of the uniform variable, set with \link MGE_shaderStoreUniformLocation MGE_shaderStoreUniformLocation \endlink
  * @param matrixToLoad
  */
-MGE_API void MGE_shaderLoadMat4x4f(GLint location, mat4x4 matrixToLoad);
+MGE_API void MGE_shaderLoadMat4x4f(struct MGE_ShaderProgram* target, size_t index, mat4x4 matrixToLoad);
+
+/**
+ * Creates a transformation matrix
+ * @param matrix the matrix to create
+ * @param transformation The x,y,z translation to use
+ * @param rotation The rx, ry, rz rotation to use
+ * @param scale The sx,sy,sz scale to use
+ * @return the matrix4x4
+ */
+MGE_API void MGE_createTransformationMatrix(mat4x4 matrix, vec3 transformation, vec3 rotation, vec3 scale);
+
+/**
+ * Binds an attribute to a part of the shader
+ * @param shaderProgram The shader program to bind to.
+ * @param attribute The attribute number to bind.
+ * @param variableName The variable name to bind the attribute to.
+ */
+MGE_API void MGE_shaderBindAttribute(struct MGE_ShaderProgram* shaderProgram, GLuint attribute, const char* variableName);
 
 /**
  * Tell OpenGL to use a Shader Program
@@ -153,13 +175,5 @@ MGE_API void MGE_shaderStop();
  * @param shaderProgram The shader program to delete
  */
 MGE_API void MGE_shaderProgramFree(struct MGE_ShaderProgram* shaderProgram);
-
-/**
- * Binds an attribute to a part of the shader
- * @param shaderProgram The shader program to bind to.
- * @param attribute The attribute number to bind.
- * @param variableName The variable name to bind the attribute to.
- */
-MGE_API void MGE_shaderBindAttribute(struct MGE_ShaderProgram* shaderProgram, GLuint attribute, const char* variableName);
 
 #endif //MATTS_GAME_ENGINE_GRAPHICSAPI_H

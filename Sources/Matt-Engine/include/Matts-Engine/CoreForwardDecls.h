@@ -32,50 +32,18 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              *
 ************************************************************************************/
 
-#ifndef MATTS_GAME_ENGINE_GRAPHICSINTERNAL_H
-#define MATTS_GAME_ENGINE_GRAPHICSINTERNAL_H
 
-#include "GraphicsAPI.h"
+#ifndef MATTS_GAME_ENGINE_COREFORWARDDECLS_H
+#define MATTS_GAME_ENGINE_COREFORWARDDECLS_H
 
-/**
- * A representation of the window (wrapped for ease)
- */
-struct MGE_Window{
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    GLFWwindow* window;
+#include "../../EngineForwardDecls.h"
 
-};
+#ifdef __cplusplus
+}
+#endif
 
-struct MGE_ShaderSource{
-    char * shaderSource;
-    size_t length;
-};
-
-struct MGE_ShaderProgram{
-
-    GLuint vertexShaderID;
-    GLuint fragmentShaderID;
-    GLuint programID;
-    struct MGE_ShaderSource vertexShaderSource;
-    struct MGE_ShaderSource fragmentShaderSource;
-    GLint* uniforms;
-    size_t uniformsSize;
-
-} ;
-
-/**
- * Loads a shader source to memory
- * @param filePath The path to the file to read.
- * @return The shader source string
- */
-MGE_API_HIDDEN void MGE_shaderRead(const char * filePath, char** dataptr, size_t* sizeptr);
-
-/**
- * Loads a shader to the GPU memory from source
- * @param source The source code of the shader
- * @param type The type of shader to load
- * @return The Shader ID from OpenGL.
- */
-MGE_API_HIDDEN GLuint MGE_shaderLoad(const char * source, GLenum type);
-
-#endif //MATTS_GAME_ENGINE_GRAPHICSINTERNAL_H
+#endif //MATTS_GAME_ENGINE_COREFORWARDDECLS_H
