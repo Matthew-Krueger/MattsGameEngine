@@ -69,7 +69,7 @@ void MGE_variableLengthArrayPush(struct MGE_VariableLengthArray* array, void* va
 
     if(newSize>array->bufLen){
         size_t newBufLen = array->bufLen * MGE_VLA_GROTH_FACTOR + 1;
-        array->buffer = realloc(array->buffer, newBufLen*sizeof(void*));
+        array->buffer = realloc(array->buffer, newBufLen*sizeof(void**));
         array->bufLen = newBufLen;
     }
 
