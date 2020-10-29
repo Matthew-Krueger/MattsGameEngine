@@ -42,22 +42,23 @@
 #endif
 
 
-struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char *vertexShaderPath, const char *fragmentShaderPath, void (*bindAttributes)(struct MGE_ShaderProgram*)) {
+struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char *vertexShaderPath, const char *fragmentShaderPath, void (*bindAttributes)(struct MGE_ShaderProgram*), void (*getAllUniformLocations)(struct MGE_ShaderProgram*)) {
 
     struct MGE_ShaderProgram* result = malloc(sizeof(struct MGE_ShaderProgram));
 
     MGE_shaderRead(vertexShaderPath, &result->vertexShaderSource.shaderSource, &result->vertexShaderSource.length);
     MGE_shaderRead(fragmentShaderPath, &result->fragmentShaderSource.shaderSource, &result->fragmentShaderSource.length);
 
-    MGE_shaderCompileFromTargetProgram(result);
-    bindAttributes(result);
+    MGE_shaderCompileFromTargetProgram(result, bindAttributes);
+
+    getAllUniformLocations(result);
 
     return result;
 
 }
 
 
-struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderProgram* target) {
+struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderProgram* target, void (*bindAttributes)(struct MGE_ShaderProgram*)) {
 
     target->vertexShaderID = MGE_shaderLoad(target->vertexShaderSource.shaderSource, GL_VERTEX_SHADER);
     target->fragmentShaderID = MGE_shaderLoad(target->fragmentShaderSource.shaderSource, GL_FRAGMENT_SHADER);
@@ -66,6 +67,7 @@ struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderPr
 
     glAttachShader(target->programID, target->vertexShaderID);
     glAttachShader(target->programID, target->fragmentShaderID);
+    bindAttributes(target);
     glLinkProgram(target->programID);
 
     GLint programLinked;
@@ -95,7 +97,29 @@ struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderPr
 
 }
 
+GLint MGE_shaderGetUniformLocation(struct MGE_ShaderProgram* target, const char * uniformName){
 
+    return glGetUniformLocation(target->programID, uniformName);
+
+}
+
+void MGE_shaderLoadFloat(GLint location, GLfloat value){
+
+    glUniform1f(location, value);
+
+}
+
+void MGE_shaderLoadVec3(GLint location, vec3 vector){
+
+    glUniform3fv(location, 3, vector);
+
+}
+
+void MGE_shaderLoadBol(GLint location, bool value){
+
+    glUniform1i(location, value);
+
+}
 
 void MGE_shaderProgramFree(struct MGE_ShaderProgram* shaderProgram) {
 

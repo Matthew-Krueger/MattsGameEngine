@@ -90,7 +90,7 @@ MGE_API void MGE_renderTexturedModel(struct MGE_TexturedModel* model);
  * @param bindAttributes The lambda to bind attributes in the program
  * @return
  */
-MGE_API struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char* vertexShaderPath, const char* fragmentShaderPath, void (*bindAttributes)(struct MGE_ShaderProgram*));
+MGE_API struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char* vertexShaderPath, const char* fragmentShaderPath, void (*bindAttributes)(struct MGE_ShaderProgram*), void (*getAllUniformLocations)(struct MGE_ShaderProgram*));
 
 /**
  * Loads a shader into GPU memory from CPU memory
@@ -98,7 +98,43 @@ MGE_API struct MGE_ShaderProgram* MGE_shaderLoadProgramFromFiles(const char* ver
  * @param fragmentSource The Fragment Shader source to attach
  * @return The shader program
  */
-MGE_API struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderProgram* target);
+MGE_API struct MGE_ShaderProgram* MGE_shaderCompileFromTargetProgram(struct MGE_ShaderProgram* target, void (*bindAttributes)(struct MGE_ShaderProgram*));
+
+/**
+ * Gets the location of a uniform variable
+ * @param target The shader to bind a uniform variable to
+ * @param uniformName The name of the uniform variable
+ * @return The uniform value.
+ */
+MGE_API GLint MGE_shaderGetUniformLocation(struct MGE_ShaderProgram* target, const char * uniformName);
+
+/**
+ * Load a float to a shader uniform
+ * @param location The location to load the float to
+ * @param value The value to load
+ */
+MGE_API void MGE_shaderLoadFloat(GLint location, GLfloat value);
+
+/**
+ * Load a vec3 to the shader uniform
+ * @param location The location to load it to
+ * @param vector The vector to load
+ */
+MGE_API void MGE_shaderLoadVec3(GLint location, vec3 vector);
+
+/**
+ * Loads a bool to a shader
+ * @param location The location to load it to
+ * @param value The value to load
+ */
+MGE_API void MGE_shaderLoadBol(GLint location, bool value);
+
+/**
+ * Does a location 
+ * @param location
+ * @param matrixToLoad
+ */
+MGE_API void MGE_shaderLoadMat4x4f(GLint location, mat4x4 matrixToLoad);
 
 /**
  * Tell OpenGL to use a Shader Program

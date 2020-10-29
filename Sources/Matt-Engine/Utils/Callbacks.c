@@ -143,7 +143,12 @@ MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum sev
 
         case GL_DEBUG_SEVERITY_NOTIFICATION:
             _severity = "NOTIFICATION";
+            // return on release, to avoid the annoying 131185 notification
+#ifdef NDEBUG
+            return;
+#else
             break;
+#endif
 
         default:
             _severity = "UNKNOWN";

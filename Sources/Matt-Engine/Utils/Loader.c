@@ -48,6 +48,19 @@ struct MGE_RawModel* MGE_rawModelLoadToVAO(struct MGE_PositionVector* positions,
     return result;
 }
 
+void MGE_rawModelFree(struct MGE_RawModel* model) {
+
+    glBindVertexArray(model->vaoID);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    glDeleteVertexArrays(1, &model->vaoID);
+    glDeleteBuffers(1,&model->vertices.vboID);
+
+    free(model);
+
+}
+
 struct MGE_Texture* MGE_textureLoadFromFile(char * filePath){
     struct MGE_Texture* texture = malloc(sizeof( struct MGE_Texture));
 
@@ -111,20 +124,6 @@ void MGE_textureFree(struct MGE_Texture* texture){
 
 }
 
-
-void MGE_rawModelFree(struct MGE_RawModel* model) {
-
-    glBindVertexArray(model->vaoID);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    glDeleteVertexArrays(1, &model->vaoID);
-    glDeleteBuffers(1,&model->vertices.vboID);
-
-    free(model);
-
-}
-
 struct MGE_TexturedModel* MGE_texturedModelCreate(struct MGE_RawModel* rawModel, struct MGE_Texture* baseColorTexture){
 
     struct MGE_TexturedModel* result = malloc(sizeof(struct MGE_TexturedModel));
@@ -183,4 +182,3 @@ struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, void* data, 
 void MGE_unbindVAO() {
     glBindVertexArray(0);
 }
-
