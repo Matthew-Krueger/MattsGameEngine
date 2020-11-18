@@ -35,6 +35,8 @@
 #ifndef MATTS_GAME_ENGINE_UTILSAPI_H
 #define MATTS_GAME_ENGINE_UTILSAPI_H
 
+
+
 /* Defines from GLFW, remapped to MGE */
 #define 	MGE_KEY_UNKNOWN   -1
 #define 	MGE_KEY_SPACE   32
@@ -161,7 +163,7 @@
 
 #include "../EngineForwardDecls.h"
 #include "Vertices.h"
-
+#include <GLFW/glfw3.h>
 /**
  * \brief Asks the kernel if the specified key id is down
  * @param window The window context to ask about
@@ -179,7 +181,7 @@ MGE_API bool MGE_isKeyDown(struct MGE_Window* window, int keyNumber);
  * @param uvCoords The \link MGE_TextureCoordVector MGE_TextureCoordVector \endlink corresponding to each position
  * @return \link MGE_RawModel MGE_RawModel \endlink A constructed RawModel
  */
-MGE_API struct MGE_RawModel* MGE_rawModelLoadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize, struct MGE_TextureCoordVector* uvCoords);
+MGE_API struct MGE_RawModel* MGE_rawModelLoadToVAO(struct MGE_PositionVector* positions, GLsizei positionsSize, GLuint *indices, GLsizei indicesSize, struct MGE_TextureCoordVector* uvCoords);
 
 /**
  * \brief Unload from the Graphics Memory the Raw Model
@@ -247,7 +249,7 @@ MGE_API void MGE_windowSetSizeCallback(struct MGE_Window* window, void (*windowR
  * \brief Set an error callback for OpenGL
  * @param errorCallback The Error Callback to set
  */
-MGE_API void MGE_windowSetDebugCallback(void (*errorCallback)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam));
+MGE_API void MGE_windowSetDebugCallback(void (*errorCallback)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const char *message, const void *userParam));
 
 
 /**
@@ -268,7 +270,7 @@ MGE_API void MGE_windowDefaultSizeCallback(GLFWwindow* window, int width, int he
  * @param message OpenGL Provided Value
  * @param userParam OpenGL Provided Value
  */
-MGE_API void MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
+MGE_API void MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const char *message, const void *userParam);
 
 /**
  * \note Sets a size hint to the variable length constructor to preallocate more memory.

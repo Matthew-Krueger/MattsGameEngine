@@ -48,3 +48,10 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${SHADER_SRC_DIR} ${SHADER_DST_DIR}
         )
+
+if(WIN32)
+    add_custom_command(TARGET ${MODULE_NAME} POST_BUILD        # Adds a post-build event to MyTest
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+            "${PROJECT_BINARY_DIR}/bin/Matts_Game_Engine.dll"      # <--this is in-file
+            $<TARGET_FILE_DIR:${MODULE_NAME}>/Matts_Game_Engine.dll)                 # <--this is out-file path
+endif(WIN32)

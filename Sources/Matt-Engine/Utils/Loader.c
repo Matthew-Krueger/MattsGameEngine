@@ -35,7 +35,7 @@
 #include "UtilsInternal.h"
 #include <STB/stb_image.h>
 
-struct MGE_RawModel* MGE_rawModelLoadToVAO(struct MGE_PositionVector* positions, GLsizeiptr positionsSize, GLuint *indices, GLsizeiptr indicesSize, struct MGE_TextureCoordVector* uvCoords) {
+struct MGE_RawModel* MGE_rawModelLoadToVAO(struct MGE_PositionVector* positions, GLsizei positionsSize, GLuint *indices, GLsizei indicesSize, struct MGE_TextureCoordVector* uvCoords) {
     struct MGE_RawModel* result = malloc(sizeof(struct MGE_RawModel));
 
     result->vaoID = MGE_createVAO();
@@ -168,7 +168,7 @@ struct MGE_VBO MGE_storeDataInAttributeList(GLuint attributeNumber, void* data, 
     glBindBuffer(GL_ARRAY_BUFFER, vbo.vboID);
 
     char buf2[5];
-    sprintf(buf2, "%ld", dataLength);
+    sprintf(buf2, "%lld", dataLength);
 
     glBufferData(GL_ARRAY_BUFFER, dataLength*dataPtrSize, data, GL_STATIC_DRAW);
     glVertexAttribPointer(attributeNumber, coordSize, typeOfData, GL_FALSE, 0, 0);

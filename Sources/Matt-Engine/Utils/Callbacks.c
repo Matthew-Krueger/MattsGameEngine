@@ -41,7 +41,7 @@ void MGE_windowSetSizeCallback(struct MGE_Window *window, void (*windowResizeCal
 
 
 void MGE_windowSetDebugCallback(
-        void (*errorCallback)(GLenum, GLenum, GLuint, GLenum, GLsizei, const GLchar *, const void *)) {
+        void (*errorCallback)(GLenum, GLenum, GLuint, GLenum, GLsizei, const char *, const void *)) {
 
     //MGE_CORE_LOG_TRACE("GL DebugMessageCallback", "Setting glDebugMessageCallback");
 
@@ -51,13 +51,13 @@ void MGE_windowSetDebugCallback(
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif
 
-    glDebugMessageCallback(errorCallback, NULL);
+    glDebugMessageCallback((GLDEBUGPROC) errorCallback, NULL);
 
 }
 
 
 void
-MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
+MGE_windowDefaultDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const char *message,
                                const void *userParam) {
 
     char* _source;

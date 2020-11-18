@@ -40,10 +40,19 @@ add_library("${MODULE_NAME}" SHARED Graphics/Displays.c Utils/UsefulMacros.h inc
 add_dependencies("${MODULE_NAME}" glfw GLAD STB_LIB)
 
 target_compile_definitions("${MODULE_NAME}" PRIVATE MGE_BUILD_LIBRARY)
-target_precompile_headers("${MODULE_NAME}" PRIVATE Utils/pch.h)
+target_precompile_headers("${MODULE_NAME}" PRIVATE Utils/pch.h Utils/pch.c)
 
-target_link_libraries("${MODULE_NAME}" GL glfw GLAD STB_LIB)
+target_link_libraries("${MODULE_NAME}" glfw GLAD STB_LIB)
+if(WIN32)
+    target_link_libraries("${MODULE_NAME}" opengl32)
+else()
+    target_link_libraries("${MODULE_NAME}" GL)
+endif(WIN32)
 
 set_target_properties(${MODULE_NAME} PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/
         )
+set_target_properties(${MODULE_NAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/
+        )
+
